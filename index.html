@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Profesional | Fredrick Laurensius Aritonang</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER & NAVIGATION (Semantik HTML5) -->
+  <header class="main-header">
+    <div class="logo-brand">
+      <span class="logo-badge">FLA</span>
+      <span class="logo-text">Fredrick Laurensius</span>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#portofolio">Portofolio</a></li>
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#kontak" class="nav-cta">Konsultasi</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="main-layout">
+
+    <!-- SECTION 1: TENTANG SAYA -->
+    <section id="tentang" class="content-section">
+      <div class="profile-hero">
+        <div class="hero-avatar-wrapper">
+          <img src="pasfoto.png.png" alt="Foto Profil Fredrick Laurensius Aritonang" class="hero-avatar-img">
+          <span class="hero-badge">Aktif</span>
+        </div>
+        <div class="hero-text">
+          <h1 class="hero-title">Fredrick Laurensius Aritonang</h1>
+          <p class="hero-subtitle">NIM: 12S24001 • S1 Sistem Informasi (2024) • IT Del</p>
+          <p class="hero-bio">
+            Fokus pada integrasi bisnis dan teknologi melalui perancangan antarmuka web modern, manajemen basis data, analisis sistem informasi, serta arsitektur jaringan komputer.
+          </p>
+        </div>
+      </div>
+
+      <!-- LISTS: UNORDERED & ORDERED -->
+      <div class="grid-two-col">
+        <div class="info-card">
+          <h3 class="card-subtitle">🎯 Spesialisasi & Keahlian (Unordered List)</h3>
+          <ul class="custom-ul">
+            <li>Perancangan Antarmuka Web (HTML5, Modern CSS Flexbox & Grid)</li>
+            <li>Manajemen & Struktur Data (Database Management System)</li>
+            <li>Pengembangan Algoritma Dasar (Java Programming)</li>
+            <li>Arsitektur & Troubleshooting Jaringan Komputer</li>
+          </ul>
+        </div>
+
+        <div class="info-card">
+          <h3 class="card-subtitle">🚀 Alur Kerja Pengerjaan Proyek (Ordered List)</h3>
+          <ol class="custom-ol">
+            <li>Analisis kebutuhan sistem dan spesifikasi pengguna</li>
+            <li>Perancangan antarmuka web semantik dan struktur wireframe</li>
+            <li>Penerapan styling estetik responsif dan pengujian WCAG 2.2</li>
+            <li>Manajemen versi kode via Git dan publikasi live di GitHub Pages</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PORTOFOLIO & TABEL CAPAIAN AKADEMIK -->
+    <section id="portofolio" class="content-section">
+      <h2 class="section-heading">Rekapitulasi Proyek & Capaian Akademik</h2>
+      <p class="section-subheading">Data rekam jejak pelaksanaan mata kuliah dan proyek praktikum semester berjalan.</p>
+
+      <div class="table-container">
+        <table class="data-table">
+          <caption>Tabel 1: Rekapitulasi Mata Kuliah & Proyek Sistem Informasi (Semester Genap)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Kode MK</th>
+              <th scope="col">Nama Mata Kuliah</th>
+              <th scope="col">Peran Proyek</th>
+              <th scope="col">Status</th>
+              <th scope="col">Target Nilai</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">12S3101</th>
+              <td>Pemrograman dan Pengujian Aplikasi Web</td>
+              <td>Frontend Developer</td>
+              <td><span class="status-tag tag-active">Berjalan</span></td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <th scope="row">12S3102</th>
+              <td>Basis Data Lanjut</td>
+              <td>Database Administrator</td>
+              <td><span class="status-tag tag-active">Berjalan</span></td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <th scope="row">10S3001</th>
+              <td>Kecerdasan Buatan (+P)</td>
+              <td>System Analyst</td>
+              <td><span class="status-tag tag-active">Berjalan</span></td>
+              <td>AB</td>
+            </tr>
+            <tr>
+              <th scope="row">12S3103</th>
+              <td>Manajemen Proyek Sistem Informasi</td>
+              <td>Project Manager</td>
+              <td><span class="status-tag tag-completed">Terencana</span></td>
+              <td>A</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4" class="text-right"><strong>Status Kumulatif Capaian:</strong></td>
+              <td><strong>Sangat Baik</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 3: FORMULIR LAYANAN & KONTAK (ACCESSIBLE FORM) -->
+    <section id="layanan" class="content-section">
+      <h2 class="section-heading">Formulir Pengajuan Konsultasi & Layanan</h2>
+      <p class="section-subheading">Silakan isi formulir di bawah ini dengan data yang valid untuk memulai diskusi proyek.</p>
+
+      <form action="/api/submit" method="POST" class="accessible-form">
+        
+        <!-- Fieldset 1: Profil Pemohon -->
+        <fieldset class="form-fieldset">
+          <legend class="form-legend">Profil Pemohon</legend>
+
+          <div class="form-group">
+            <label for="nama" class="form-label">Nama Lengkap <span class="req">*</span></label>
+            <input type="text" id="nama" name="nama" class="form-control" required placeholder="Contoh: Fredrick Laurensius Aritonang">
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email Institusi Kampus <span class="req">*</span></label>
+            <input type="email" id="email" name="email" class="form-control" required placeholder="nama@del.ac.id">
+            <small class="form-help">🔒 Gunakan email institusi resmi untuk verifikasi identitas.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="phone" class="form-label">Nomor WhatsApp / Telepon <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" class="form-control" required placeholder="081234567890">
+          </div>
+        </fieldset>
+
+        <!-- Fieldset 2: Spesifikasi Permintaan -->
+        <fieldset class="form-fieldset">
+          <legend class="form-legend">Spesifikasi Permintaan</legend>
+
+          <div class="form-group">
+            <label for="budget" class="form-label">Estimasi Anggaran Proyek (IDR) <span class="req">*</span></label>
+            <input type="number" id="budget" name="budget" class="form-control" min="100000" step="50000" required placeholder="500000">
+          </div>
+
+          <div class="form-group">
+            <label for="kategori" class="form-label">Fokus Mata Kuliah / Proyek <span class="req">*</span></label>
+            <select id="kategori" name="kategori" class="form-control" required>
+              <option value="">-- Pilih Topik Matakuliah --</option>
+              <option value="10S3001">10S3001 — Kecerdasan Buatan (+P)</option>
+              <option value="12S3101">12S3101 — Pemrograman dan Pengujian Aplikasi Web</option>
+              <option value="12S3102">12S3102 — Basis Data Lanjut</option>
+              <option value="12S3103">12S3103 — Manajemen Proyek Sistem Informasi</option>
+              <option value="12S3104">12S3104 — Kepemimpinan dan Manajemen Sistem Informasi</option>
+              <option value="12S3105">12S3105 — Keamanan Sistem</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <span class="form-label">Prioritas Jadwal Diskusi <span class="req">*</span></span>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="prioritas" value="reguler" checked> Reguler (1 Minggu)
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="prioritas" value="prioritas"> Prioritas (2-3 Hari)
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pesan" class="form-label">Rincian Pertanyaan / Catatan Diskusi <span class="req">*</span></label>
+            <textarea id="pesan" name="pesan" rows="4" class="form-control" required placeholder="Jelaskan secara singkat rincian masalah atau spesifikasi proyek Anda..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-option">
+              <input type="checkbox" id="persetujuan" name="persetujuan" required>
+              Saya menyetujui pemrosesan data identitas di atas untuk keperluan verifikasi. <span class="req">*</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn-submit">
+          <span>Kirim Permintaan Konsultasi</span>
+          <span class="btn-arrow">→</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- ASIDE: SIDEBAR KETERSEDIAAN -->
+    <aside class="sidebar-box">
+      <h3 class="sidebar-heading">Status Ketersediaan</h3>
+      <p class="sidebar-desc">Terbuka untuk kolaborasi proyek praktikum dan diskusi akademik S1 Sistem Informasi IT Del.</p>
+      <div class="status-indicator">
+        <span class="pulse-dot"></span> Siap Menerima Diskusi
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- FOOTER DOKUMEN -->
+  <footer class="main-footer">
+    <p>&copy; 2026 Fredrick Laurensius Aritonang (NIM: 12S24001). Program Studi S1 Sistem Informasi, Institut Teknologi Del.</p>
+  </footer>
+
+</body>
+</html>
