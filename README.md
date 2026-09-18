@@ -1,30 +1,53 @@
-# Tugas Mandiri Minggu 02 — HTML5, Modern CSS, & Aksesibilitas Web
+# Portofolio Profil Profesional - Week 2 PPW
 
-**Nama Mahasiswa:** Fredrick Laurensius Aritonang  
-**NIM:** 12S24001  
-**Program Studi:** S1 Sistem Informasi  
-**Mata Kuliah:** Pemrograman & Pengujian Aplikasi Web (12S3101)  
-**Institut Teknologi Del**  
+Dokumen ini merupakan proyek pembuatan halaman web portofolio profil profesional tunggal (*Single Page Showcase Webpage*) untuk memenuhi Tugas Mingguan Ke-2 Mata Kuliah **Pemrograman dan Pengujian Aplikasi Web (PPW)** di IT Del.
 
 ---
 
-## 📌 Deskripsi Proyek
-Proyek web halaman tunggal (*Single Page Showcase Webpage*) ini dibangun berdasarkan 5 komponen utama pada Rubrik Penilaian Praktikum:
-1. **Struktur Semantik HTML5 (20%)**: Menggunakan tag `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, dan `<footer>` secara valid tanpa *div-soup*.
-2. **Penyajian Data (List & Table - 15%)**: Menyajikan tabel data akademik semantik lengkap (`<caption>`, `<thead>`, `<tbody>`, `<tfoot>`, `scope`) serta daftar terurut (`<ol>`) dan tak terurut (`<ul>`).
-3. **Desain Form & Aksesibilitas (20%)**: Memuat 8 jenis kontrol input, dikelompokkan dengan `<fieldset>` dan `<legend>`, keterhubungan label eksplisit `for="..."`, serta validasi native `required`.
-4. **Estetika & Tata Letak Modern CSS (25%)**: Menggunakan Universal Box Sizing Reset, aturan warna 60-30-10, CSS Flexbox, CSS Grid, serta responsif di layar mobile/desktop melalui `@media (max-width: 768px)`.
-5. **Git & GitHub Pages Deployment (20%)**: Kode dikelola secara terstruktur melalui repositori publik dan dipublikasikan secara live.
+## 👤 Informasi Mahasiswa
+* **Nama**: Fredrick Laurensius Aritonang
+* **NIM**: 12S24001
+* **Program Studi**: S1 Sistem Informasi
+* **Institusi**: Institut Teknologi Del
 
 ---
 
-## 📸 Tampilan Antarmuka (Preview)
-- **Tampilan Desktop**: Memiliki tata letak 2 kolom, header melayang (*sticky*), dan tabel interaktif.
-- **Tampilan Mobile**: Responsif secara otomatis menyesuaikan resolusi layar di bawah `768px`.
+## 🌐 Live Demo (GitHub Pages)
+Halaman web ini telah dipublikasikan secara *live* dan dapat diakses melalui tautan berikut:
+👉 [https://FredrickAritonang.github.io/ppw-2026-week2-12S24001/](https://FredrickAritonang.github.io/ppw-2026-week2-12S24001/)
 
 ---
 
-## 🚀 Langkah Menjalankan Proyek
-1. Clone repositori ini:
-   ```bash
-   git clone [https://github.com/](https://github.com/)[username_github]/ppw-2026-week2-12S24001.git
+## 🛠️ Fitur & Implementasi Spesifikasi Teknis
+
+Aplikasi web ini dibangun dengan memenuhi seluruh kriteria teknis wajib:
+
+1. **Struktur Semantik HTML5**:
+   * Menggunakan elemen semantik `<header>`, `<nav>`, `<main>`, `<section>`, `<aside>`, dan `<footer>`.
+   * Bebas dari penggunaan pembungkus `<div>` tanpa makna semantik pada struktur utama.
+
+2. **Data Tabular & Lists**:
+   * Menyajikan rekapitulasi nilai/proyek dalam bentuk tabel semantik lengkap (`<table>`, `<caption>`, `<thead>`, `<tbody>`, `<tfoot>`, serta atribut `scope="col/row"`).
+   * Memuat dua jenis daftar HTML (`<ul>` untuk Fokus Keahlian dan `<ol>` untuk Alur Kerja Pengerjaan Proyek).
+
+3. **Formulir Interaktif & Aksesibel (WCAG 2.2 AA)**:
+   * Mengelompokkan input menggunakan `<fieldset>` dan `<legend>`.
+   * Memuat lebih dari 6 jenis kontrol input (`text`, `email`, `tel`, `number`, `radio`, `checkbox`, `select`, dan `textarea`).
+   * Menggunakan atribut `for="..."` pada `<label>` secara eksplisit serta validasi native `required`.
+
+4. **Estetika & CSS Modern**:
+   * Memakai CSS Eksternal (`style.css`) dengan reset *Universal Box Sizing*.
+   * Menerapkan aturan palet warna 60-30-10, sudut membulat (`border-radius`), dan bayangan lembut (`box-shadow`).
+   * Tata letak berbasis **CSS Flexbox** dan **CSS Grid**.
+   * Fully Responsive pada berbagai ukuran layar menggunakan Media Queries (`@media (max-width: 768px)`).
+
+---
+
+## 📂 Struktur Berkas Repositori
+
+```text
+ppw-2026-week2-12S24001/
+├── index.html        # Berkas utama struktur dokumen HTML5
+├── style.css         # Berkas styling CSS eksternal
+├── pasfoto.png.png   # Foto profil pengguna
+└── README.md         # Dokumentasi repositori proyek
