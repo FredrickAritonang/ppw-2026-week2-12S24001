@@ -1,4 +1,4 @@
-# Personal Portfolio & Service Portal (Refactored to Bootstrap 5)
+# Personal Portofolio & Service Portal (Refactored to Bootstrap 5)
 
 ## Identitas Pengembang
 - Nama: Fredrick Laurensius Aritonang
