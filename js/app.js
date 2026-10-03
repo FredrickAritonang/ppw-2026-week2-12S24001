@@ -125,12 +125,16 @@
     /* ---------- Profil & sertifikat ---------- */
     renderProfile() {
       const { status, data: p, error } = this.state.profile;
-      const section = $('tentang');
+      const section = $('profil');
+      const about = $('tentang');
       section.setAttribute('aria-busy', String(status === 'loading'));
+      about.setAttribute('aria-busy', String(status === 'loading'));
       if (status === 'error') {
         $('bioName').textContent = 'Profil tidak tersedia';
         $('bioDetails').textContent = error;
         $('bioDescription').textContent = 'Muat ulang halaman atau periksa berkas data/profile.json.';
+        $('skillsList').replaceChildren(el('li', { text: 'Data tidak tersedia.' }));
+        $('workflowList').replaceChildren(el('li', { text: 'Data tidak tersedia.' }));
         return;
       }
       if (status !== 'success') return;
@@ -142,9 +146,9 @@
       $('bioStatus').textContent = p.status;
       const photo = $('bioPhoto');
       if (p.photo && photo.getAttribute('src') !== p.photo) photo.setAttribute('src', safeUrl(p.photo));
-      $('fullname').setAttribute('placeholder', `Contoh: ${p.name}`);
       $('skillsList').replaceChildren(...p.skills.map((s) => el('li', { text: s })));
       $('workflowList').replaceChildren(...p.workflows.map((w) => el('li', { text: w })));
+      Contacts.render($('contactCards'), p.contacts, 'card');
     },
 
     renderCertificates() {

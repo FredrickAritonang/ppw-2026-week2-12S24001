@@ -128,7 +128,7 @@ Akibat praktisnya: menambah proyek ke-11 cukup menyunting `projects.json` tanpa 
 | Filter | Tidak ada | Kategori + pencarian teks, instan tanpa fetch ulang |
 | Form | Submit standar (reload halaman) | `fetch()` HTTP POST JSON, tanpa reload, spinner, toast |
 | State sisi klien | Tidak ada | Riwayat pesanan di `localStorage`, badge reaktif (sinkron antar-tab) |
-| Katalog layanan | Tidak ada | `services.json` (10 paket) dirender sebagai kartu, memilih paket mengisi form |
+| Katalog layanan | Tidak ada | `services.json` (12 paket) dirender sebagai kartu, memilih paket mengisi form |
 | Keamanan | Tidak ada | Tanpa `innerHTML` untuk data, validasi URL, CSP, SRI |
 | Caching | Tidak diukur | Cold vs warm load diukur di DevTools (bagian 6) |
 
@@ -211,7 +211,7 @@ Bukti `304` pada respons server: lihat `docs/screenshots/status-304.png` (permin
 ![Status 304 pada projects.json](docs/screenshots/status-304.png)
 
 ## 7. Pengujian Manual
-- [x] Halaman memuat profil, 3 sertifikat, 10 proyek, 10 paket layanan dari JSON
+- [x] Halaman memuat profil, 3 sertifikat, 10 proyek, 12 paket layanan dari JSON
 - [x] `?delay=2000` menampilkan skeleton; `?simulate=projects` menampilkan alert + "Coba lagi" yang berfungsi
 - [x] Filter kategori dan pencarian bekerja; hasil kosong menampilkan Empty State dan "Reset filter" memulihkannya
 - [x] Hanya ada satu elemen `.modal` di DOM; tombol detail membuka modal dengan isi berbeda per proyek

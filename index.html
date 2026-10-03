@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://images.unsplash.com; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://jsonplaceholder.typicode.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://images.unsplash.com https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://jsonplaceholder.typicode.com; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="description" content="Portofolio dan portal layanan berarsitektur decoupled: konten dimuat asinkron dari JSON (Client-Side Rendering).">
   <meta name="theme-color" content="#0b1220">
   <title>Portofolio & Portal Layanan | Decoupled CSR</title>
@@ -22,6 +22,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <script defer src="js/api-service.js"></script>
+  <script defer src="js/contacts.js"></script>
   <script defer src="js/app.js"></script>
 </head>
 <body class="bg-light">
@@ -29,7 +30,7 @@
 
   <header class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#tentang">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#profil">
         <span class="badge bg-primary px-2 py-1">FLA</span>
         <span id="brandName" class="fw-bold">Memuat nama...</span>
       </a>
@@ -39,11 +40,13 @@
       </button>
       <nav class="collapse navbar-collapse" id="mainNav" aria-label="Navigasi utama">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#profil">Profil</a></li>
           <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
           <li class="nav-item"><a class="nav-link" href="#sertifikat">Sertifikat</a></li>
           <li class="nav-item"><a class="nav-link" href="#portofolio">Portofolio</a></li>
           <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
           <li class="nav-item"><a class="nav-link" href="#formulir">Formulir</a></li>
+          <li class="nav-item"><a class="nav-link" href="#kontak">Hubungi saya</a></li>
         </ul>
         <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="offcanvas"
                 data-bs-target="#orderHistory" aria-controls="orderHistory">
@@ -55,7 +58,7 @@
 
   <main id="konten" class="container my-5 pt-3">
     <!-- Profil -->
-    <section id="tentang" class="card border-0 shadow-sm p-4 mb-4" aria-busy="true">
+    <section id="profil" class="card border-0 shadow-sm p-4 mb-4" aria-busy="true">
       <div class="row align-items-center">
         <div class="col-md-3 text-center mb-3 mb-md-0 position-relative">
           <img id="bioPhoto" src="assets/img/pasfoto.png" alt="Foto profil" class="rounded-circle img-thumbnail shadow-sm avatar">
@@ -67,16 +70,21 @@
           <p id="bioDescription" class="mb-0">Memuat deskripsi...</p>
         </div>
       </div>
-      <div class="row mt-4 g-3">
+    </section>
+
+    <!-- Tentang (terpisah dari Profil) -->
+    <section id="tentang" class="card border-0 shadow-sm p-4 mb-4" aria-busy="true">
+      <h2 class="h3 fw-bold mb-3">Tentang saya</h2>
+      <div class="row g-3">
         <div class="col-md-6">
           <div class="p-3 bg-light rounded border h-100">
-            <h2 class="h5 fw-bold">Fokus keahlian</h2>
+            <h3 class="h5 fw-bold">Fokus keahlian</h3>
             <ul id="skillsList" class="mb-0"><li>Memuat keahlian...</li></ul>
           </div>
         </div>
         <div class="col-md-6">
           <div class="p-3 bg-light rounded border h-100">
-            <h2 class="h5 fw-bold">Alur kerja proyek</h2>
+            <h3 class="h5 fw-bold">Alur kerja proyek</h3>
             <ol id="workflowList" class="mb-0"><li>Memuat alur kerja...</li></ol>
           </div>
         </div>
@@ -119,8 +127,7 @@
 
     <!-- Formulir -->
     <section id="formulir" class="card border-0 shadow-sm p-4 mb-4">
-      <h2 class="h3 fw-bold">Ajukan permintaan layanan</h2>
-      <p class="small">Dikirim lewat <code>fetch()</code> HTTP POST (JSON) tanpa memuat ulang halaman.</p>
+      <h2 class="h3 fw-bold mb-3">Ajukan permintaan layanan</h2>
 
       <form id="consultationForm" class="mt-2" novalidate>
         <fieldset class="border p-3 rounded mb-3 bg-light">
@@ -132,7 +139,7 @@
           </div>
           <div class="mb-3">
             <label for="email" class="form-label fw-semibold">Email aktif <span class="text-danger">*</span></label>
-            <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="nama@email.com" autocomplete="email" required>
+            <input type="email" class="form-control" id="email" name="email" maxlength="100" autocomplete="email" required>
             <div class="invalid-feedback">Masukkan alamat email yang valid.</div>
           </div>
         </fieldset>
@@ -169,9 +176,8 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="description" class="form-label fw-semibold">Deskripsi permintaan <span class="text-danger">*</span></label>
-            <textarea class="form-control" id="description" name="description" rows="3" minlength="10" maxlength="500" required></textarea>
-            <div class="invalid-feedback">Tulis minimal 10 karakter.</div>
+            <label for="description" class="form-label fw-semibold">Deskripsi permintaan</label>
+            <textarea class="form-control" id="description" name="description" rows="3" maxlength="500"></textarea>
           </div>
           <div class="form-check mb-1">
             <input class="form-check-input" type="checkbox" id="agree" name="agree" required>
@@ -182,6 +188,12 @@
 
         <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-2 fw-bold">Kirim permintaan</button>
       </form>
+    </section>
+
+    <!-- Hubungi saya (bagian terakhir) -->
+    <section id="kontak" class="card border-0 shadow-sm p-4 mb-4">
+      <h2 class="h3 fw-bold mb-3">Hubungi saya</h2>
+      <div id="contactCards" class="contact-grid"></div>
     </section>
   </main>
 

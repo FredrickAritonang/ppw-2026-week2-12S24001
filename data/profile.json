@@ -35,5 +35,47 @@
     }
   ],
   "photo": "assets/img/pasfoto.png",
-  "tagline": "Mahasiswa S1 Sistem Informasi"
+  "tagline": "Mahasiswa S1 Sistem Informasi",
+  "contacts": [
+    {
+      "type": "whatsapp",
+      "label": "WhatsApp",
+      "badge": "WA",
+      "value": "082269342866",
+      "url": "https://wa.me/6282269342866",
+      "icon": "whatsapp"
+    },
+    {
+      "type": "instagram",
+      "label": "Instagram",
+      "badge": "IG",
+      "value": "@fredricktonang",
+      "url": "https://www.instagram.com/fredricktonang",
+      "icon": "instagram"
+    },
+    {
+      "type": "email",
+      "label": "Email",
+      "badge": "@",
+      "value": "erickaritonang93@gmail.com",
+      "url": "mailto:erickaritonang93@gmail.com",
+      "icon": "gmail"
+    },
+    {
+      "type": "linkedin",
+      "label": "LinkedIn",
+      "badge": "in",
+      "value": "Fredrick Laurensius Aritonang",
+      "url": "https://www.linkedin.com/search/results/people/?keywords=Fredrick%20Laurensius%20Aritonang",
+      "icon": "linkedin"
+    },
+    {
+      "type": "github",
+      "label": "GitHub",
+      "badge": "GH",
+      "value": "FredrickAritonang",
+      "url": "https://github.com/FredrickAritonang",
+      "icon": "github"
+    }
+  ]
 }
