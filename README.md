@@ -17,10 +17,12 @@ Refactoring tugas Minggu 3 menjadi aplikasi web kontemporer: seluruh konten dimu
 ├── css/custom-style.css    # Tema, skeleton loading, state komponen
 ├── data/
 │   ├── profile.json        # Biodata, keahlian, alur kerja, sertifikat
+│   ├── contacts.json       # Daftar kontak (WhatsApp, Instagram, Email, LinkedIn, GitHub)
 │   ├── projects.json       # 10 proyek: metrics, tags, image, link
 │   └── services.json       # 12 paket layanan (fitur, tarif) + daftar topik mata kuliah
 ├── js/
 │   ├── api-service.js      # Data Access Layer: fetch, timeout, error handling, POST
+│   ├── contacts.js         # Komponen kontak: render kartu/ikon dengan validasi URL
 │   └── app.js              # Presentation Layer: render DOM, event, state lokal
 ├── assets/img/             # Foto profil dan sertifikat
 └── docs/screenshots/       # Bukti DevTools (lihat bagian 6)
@@ -37,7 +39,7 @@ flowchart TB
     spa["<b>Web App (Presentation Tier)</b><br/>[Container: HTML5, Bootstrap 5.3, JavaScript ES6+]<br/>Shell HTML, app.js merakit DOM, 4 UI state,<br/>modal universal, form, dan toast"]
     api["<b>Data Access Layer</b><br/>[Container: api-service.js, Fetch API]<br/>Memanggil JSON dan REST, timeout,<br/>klasifikasi error"]
     static["<b>Static Web Server</b><br/>[Container: GitHub Pages]<br/>Menyajikan index.html, css, js, assets<br/>dengan header ETag dan Cache-Control"]
-    json[("<b>JSON Data Providers</b><br/>[Container: profile.json, projects.json, services.json]<br/>Mock RESTful data layer")]
+    json[("<b>JSON Data Providers</b><br/>[Container: profile.json, contacts.json, projects.json, services.json]<br/>Mock RESTful data layer")]
     local[("<b>Browser Storage</b><br/>[Container: localStorage]<br/>Riwayat pesanan di sisi klien")]
   end
 
@@ -76,7 +78,7 @@ sequenceDiagram
   B->>S: GET index.html, css, js
   S-->>B: 200 OK
   Note over B: Loading: skeleton tampil
-  B->>D: GET profile, projects, services (paralel)
+  B->>D: GET profile, contacts, projects, services (paralel)
   D-->>B: 200 JSON
   Note over B: Success atau Empty: kartu dirender
   B-xD: Gagal: 4xx, 5xx, atau timeout
@@ -86,7 +88,7 @@ sequenceDiagram
 Langkah 4 adalah jalur berhasil (Success atau Empty); langkah 5 adalah jalur gagal (Error). Keduanya alternatif, bukan berurutan.
 
 ### Narasi Separation of Concerns
-Setiap tier hanya mengurus satu tanggung jawab. **Presentation Tier** (`index.html`, `custom-style.css`, `app.js`) hanya memutuskan bagaimana data ditampilkan: merakit DOM, menangani klik, filter, modal, dan validasi form. **Application/API Logic Tier** (`api-service.js`) menjadi satu-satunya pintu keluar jaringan: ia menyusun URL, menambahkan timeout, menerjemahkan kegagalan jaringan menjadi pesan yang dipahami pengguna, dan membungkus POST dalam kontrak JSON. **Data Storage Tier** (`data/*.json`) berisi isi konten tanpa satu pun logika tampilan. Hasilnya, mengganti sumber data menjadi API sungguhan cukup mengubah `ApiService`, dan mengubah isi portofolio cukup menyunting JSON tanpa menyentuh HTML. Pemisahan ini juga membuat tiap lapisan dapat diuji sendiri.
+Setiap tier hanya mengurus satu tanggung jawab. **Presentation Tier** (`index.html`, `custom-style.css`, `app.js`, `contacts.js`) hanya memutuskan bagaimana data ditampilkan: merakit DOM, menangani klik, filter, modal, dan validasi form. **Application/API Logic Tier** (`api-service.js`) menjadi satu-satunya pintu keluar jaringan: ia menyusun URL, menambahkan timeout, menerjemahkan kegagalan jaringan menjadi pesan yang dipahami pengguna, dan membungkus POST dalam kontrak JSON. **Data Storage Tier** (`data/*.json`) berisi isi konten tanpa satu pun logika tampilan. Hasilnya, mengganti sumber data menjadi API sungguhan cukup mengubah `ApiService`, dan mengubah isi portofolio cukup menyunting JSON tanpa menyentuh HTML. Pemisahan ini juga membuat tiap lapisan dapat diuji sendiri.
 
 ### Perbandingan paradigma (ringkas)
 | Aspek | Monolith SSR | CSR (proyek ini) | Jamstack |
@@ -106,17 +108,31 @@ Proyek ini memilih CSR di atas static hosting karena datanya kecil, jarang berub
 | Lapisan | Berkas | Satu-satunya tanggung jawab | Hal yang sengaja *tidak* dilakukan |
 |---|---|---|---|
 | Struktur | `index.html` | Kerangka semantik dan titik pasang (`#projectsGrid`, `#servicesGrid`, 1 modal) | Tidak memuat satu pun data proyek/layanan |
-| Presentasi | `css/custom-style.css`, `js/app.js` | Gaya, perakitan DOM, event, 4 UI state | Tidak memanggil `fetch()` langsung |
+| Presentasi | `css/custom-style.css`, `js/app.js`, `js/contacts.js` | Gaya, perakitan DOM, event, 4 UI state | Tidak memanggil `fetch()` langsung |
 | Akses data | `js/api-service.js` | URL, timeout, klasifikasi error, kontrak POST | Tidak menyentuh DOM |
 | Data | `data/*.json` | Isi konten terstruktur | Tidak berisi logika atau markup |
 
-Akibat praktisnya: menambah proyek ke-11 cukup menyunting `projects.json` tanpa membuka HTML atau JavaScript; mengganti JSON statis dengan API sungguhan cukup mengubah `ApiService.DATA_BASE`; dan kegagalan `services.json` hanya memunculkan Error di bagian layanan, sedangkan profil dan proyek tetap tampil karena tiap sumber data punya state sendiri.
+Akibat praktisnya: menambah proyek ke-11 cukup menyunting `projects.json` tanpa membuka HTML atau JavaScript; mengganti JSON statis dengan API sungguhan cukup mengubah `ApiService.DATA_BASE`; dan kegagalan `services.json` hanya memunculkan Error di bagian layanan, sedangkan profil, kontak, dan proyek tetap tampil karena tiap sumber data punya state sendiri.
 
 **2. Komparasi paradigma.** *Monolith SSR* merakit HTML di server pada setiap request; konten awal langsung terbaca mesin pencari, tetapi setiap kunjungan memakai CPU server dan menuntut hosting dengan runtime. *CSR* (pilihan proyek ini) mengirim shell kecil lalu merakit DOM di browser; beban server hampir nol dan TTFB rendah, namun konten bermakna baru muncul setelah JS dan JSON terunduh, sehingga *First Contentful Paint* bergantung pada jaringan klien dan SEO bergantung pada kemampuan crawler menjalankan JavaScript. *Jamstack/SSG* merender HTML saat *build* lalu menyajikannya dari CDN: konten awal cepat dan SEO baik, tetapi setiap perubahan data memerlukan build ulang kecuali digabung dengan hidrasi via API. *Microservices* memecah domain bisnis menjadi layanan independen yang dapat diskalakan terpisah, dengan harga kompleksitas jaringan, konsistensi data, dan operasional.
 
 **3. Mengapa CSR di atas static hosting cocok di sini.** Data portofolio kecil (sekitar 20 kB JSON), jarang berubah, tidak berisi data pribadi dinamis, dan tidak memerlukan autentikasi, sehingga server aplikasi tidak memberi nilai tambah. Dampak negatif CSR dimitigasi dengan: skeleton loading (persepsi kecepatan), `<link rel="preload">` agar JSON diunduh paralel dengan skrip, `defer` agar HTML tidak diblokir, dan `loading="lazy"` untuk gambar. Bila proyek berkembang (misalnya perlu SEO per proyek atau data per pengguna), jalur evolusinya adalah SSG untuk halaman publik dan API sungguhan di belakang `ApiService`, tanpa menulis ulang lapisan presentasi.
 
 **4. Kaitan dengan caching.** Karena shell, CSS, JS, dan JSON adalah berkas statis terpisah, masing-masing dapat di-cache dan divalidasi sendiri (`ETag`/`304`). Pada arsitektur SSR satu halaman dinamis tidak dapat disimpan dengan cara yang sama. Hasil pengukuran ada di bagian 6.
+
+### Skema `data/contacts.json`
+Setiap kontak adalah satu objek; urutan array menentukan urutan tampil.
+
+| Field | Contoh | Keterangan |
+|---|---|---|
+| `type` | `whatsapp` | Kunci unik; dipakai sebagai kelas CSS `contact-<type>` untuk warna badge |
+| `label` | `WhatsApp` | Judul yang tampil pada kartu |
+| `badge` | `WA` | Singkatan cadangan bila ikon gagal dimuat |
+| `value` | `@fredricktonang` | Teks yang tampil di bawah label |
+| `url` | `https://wa.me/62...` | Tautan tujuan; hanya `https:` atau `mailto:` yang diterima |
+| `icon` | `whatsapp` | Nama ikon Simple Icons (dimuat dari jsDelivr) |
+
+Menambah kontak baru cukup dengan menambah satu objek di JSON tanpa mengubah HTML atau JavaScript.
 
 ## 2. Tabel Komparasi Sebelum vs Sesudah Refactoring
 | Aspek | Sebelum (Minggu 3) | Sesudah (Minggu 4) |
@@ -129,6 +145,7 @@ Akibat praktisnya: menambah proyek ke-11 cukup menyunting `projects.json` tanpa 
 | Form | Submit standar (reload halaman) | `fetch()` HTTP POST JSON, tanpa reload, spinner, toast |
 | State sisi klien | Tidak ada | Riwayat pesanan di `localStorage`, badge reaktif (sinkron antar-tab) |
 | Katalog layanan | Tidak ada | `services.json` (12 paket) dirender sebagai kartu, memilih paket mengisi form |
+| Data kontak | Tautan kontak ditulis langsung di HTML | `contacts.json` dirender oleh `contacts.js` (ikon, label, tautan) |
 | Keamanan | Tidak ada | Tanpa `innerHTML` untuk data, validasi URL, CSP, SRI |
 | Caching | Tidak diukur | Cold vs warm load diukur di DevTools (bagian 6) |
 
@@ -136,17 +153,17 @@ Akibat praktisnya: menambah proyek ke-11 cukup menyunting `projects.json` tanpa 
 | State | Pemicu | Tampilan |
 |---|---|---|
 | Loading | Sebelum `fetch()` selesai | Kartu skeleton dengan animasi shimmer (dimatikan bila `prefers-reduced-motion`) |
-| Success | JSON valid dan berisi data | Kartu proyek, paket layanan, sertifikat |
+| Success | JSON valid dan berisi data | Kartu proyek, paket layanan, sertifikat, kartu kontak |
 | Empty | Filter/pencarian tanpa hasil, atau JSON kosong | Pesan penjelasan + tombol "Reset filter" |
 | Error | HTTP non-2xx, jaringan putus, atau timeout 8 detik | Alert merah dengan penyebab + tombol "Coba lagi" |
 
-Setiap sumber data (profil, proyek, layanan) memiliki state sendiri, sehingga kegagalan satu berkas tidak menjatuhkan seluruh halaman. Untuk demo/screenshot:
+Setiap sumber data (profil, kontak, proyek, layanan) memiliki state sendiri, sehingga kegagalan satu berkas tidak menjatuhkan seluruh halaman. Untuk demo/screenshot:
 - `index.html?delay=2000` memperlihatkan state Loading lebih lama
-- `index.html?simulate=projects` memicu state Error (`profile`, `services`, juga didukung; `order` memicu gagal-kirim form)
+- `index.html?simulate=projects` memicu state Error (`profile`, `contacts`, `services`, juga didukung; `order` memicu gagal-kirim form)
 
 ## 4. Keamanan Sisi Klien
 - **Anti DOM-XSS:** semua nilai dari JSON dirender dengan `textContent`/`setAttribute` lewat helper `el()`. Tidak ada `innerHTML` yang berisi data dinamis.
-- **Validasi URL:** `safeUrl()` hanya meloloskan `http(s)` atau path relatif, sehingga `javascript:` dan `data:` dari JSON ditolak.
+- **Validasi URL:** `safeUrl()` hanya meloloskan `http(s)` atau path relatif, sehingga `javascript:` dan `data:` dari JSON ditolak. Khusus kontak, `contacts.js` hanya menerima skema `https:` dan `mailto:`; entri dengan skema lain dilewati.
 - **Content Security Policy** (meta tag di `index.html`): skrip hanya dari `'self'` dan `cdn.jsdelivr.net`, tanpa `unsafe-inline`; `connect-src` dibatasi ke `'self'` dan endpoint mock; `object-src 'none'`. Karena itu tidak ada atribut `onerror`/`style` inline; fallback gambar memakai listener terdelegasi dan style dipindah ke CSS.
 - **SRI:** Bootstrap dari CDN diberi `integrity` sha384.
 - **Validasi form:** atribut HTML5 (`required`, `type=email`, `minlength`, `maxlength`) + `checkValidity()`, dan nilai dipotong (`slice`) sebelum dikirim.
@@ -211,7 +228,7 @@ Bukti `304` pada respons server: lihat `docs/screenshots/status-304.png` (permin
 ![Status 304 pada projects.json](docs/screenshots/status-304.png)
 
 ## 7. Pengujian Manual
-- [x] Halaman memuat profil, 3 sertifikat, 10 proyek, 12 paket layanan dari JSON
+- [x] Halaman memuat profil, 3 sertifikat, 5 kontak, 10 proyek, 12 paket layanan dari JSON
 - [x] `?delay=2000` menampilkan skeleton; `?simulate=projects` menampilkan alert + "Coba lagi" yang berfungsi
 - [x] Filter kategori dan pencarian bekerja; hasil kosong menampilkan Empty State dan "Reset filter" memulihkannya
 - [x] Hanya ada satu elemen `.modal` di DOM; tombol detail membuka modal dengan isi berbeda per proyek
