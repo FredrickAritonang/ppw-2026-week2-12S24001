@@ -1,0 +1,353 @@
+[
+  {
+    "id": "12S3101",
+    "title": "Pemrograman dan Pengujian Aplikasi Web",
+    "role": "Frontend Developer",
+    "category": "web",
+    "status": "Berjalan",
+    "gradeTarget": "A",
+    "description": "Pengembangan antarmuka web responsif, aksesibilitas WCAG 2.2 AA, dan integrasi Client-Side Rendering (CSR) dengan RESTful mock data.",
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "JavaScript ES6+",
+      "Bootstrap 5"
+    ],
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80",
+    "link": "https://FredrickAritonang.github.io/smartstore-ai-copilot/",
+    "tags": [
+      "frontend",
+      "csr",
+      "bootstrap"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "4"
+      },
+      {
+        "label": "Status",
+        "value": "Berjalan"
+      }
+    ]
+  },
+  {
+    "id": "12S3102",
+    "title": "Basis Data Lanjut",
+    "role": "Database Administrator",
+    "category": "database",
+    "status": "Berjalan",
+    "gradeTarget": "A",
+    "description": "Perancangan skema basis data relasional kompleks, optimasi query, pengindeksan, serta pengujian stored procedure.",
+    "tech": [
+      "SQL Server",
+      "PostgreSQL",
+      "Database Tuning"
+    ],
+    "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "sql",
+      "optimasi",
+      "indexing"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Berjalan"
+      }
+    ]
+  },
+  {
+    "id": "10S3001",
+    "title": "Kecerdasan Buatan (+P)",
+    "role": "System Analyst",
+    "category": "ai",
+    "status": "Berjalan",
+    "gradeTarget": "AB",
+    "description": "Analisis kebutuhan model Machine Learning, integrasi REST API copilot AI, dan pemodelan alur keputusan cerdas.",
+    "tech": [
+      "Python",
+      "FastAPI",
+      "Prompt Engineering"
+    ],
+    "image": "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "machine-learning",
+      "api",
+      "prompt"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "AB"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Berjalan"
+      }
+    ]
+  },
+  {
+    "id": "12S3103",
+    "title": "Manajemen Proyek Sistem Informasi",
+    "role": "Project Manager",
+    "category": "mpsi",
+    "status": "Terencana",
+    "gradeTarget": "A",
+    "description": "Pengelolaan siklus proyek perangkat lunak menggunakan Notion, Kanban Board, serta pengawasan indikator performa (KPI).",
+    "tech": [
+      "Agile / Scrum",
+      "Notion",
+      "Risk Analysis"
+    ],
+    "image": "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "agile",
+      "kanban",
+      "kpi"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Terencana"
+      }
+    ]
+  },
+  {
+    "id": "12S2202",
+    "title": "UI/UX",
+    "role": "UI/UX Designer",
+    "category": "web",
+    "status": "Selesai",
+    "gradeTarget": "A",
+    "description": "Riset pengguna, wireframe, dan prototipe antarmuka interaktif dengan evaluasi usability berbasis heuristik Nielsen.",
+    "tech": [
+      "Figma",
+      "Wireframing",
+      "Usability Testing"
+    ],
+    "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "ux",
+      "prototype",
+      "usability"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Selesai"
+      }
+    ]
+  },
+  {
+    "id": "12S3105",
+    "title": "Keamanan Sistem",
+    "role": "Security Analyst",
+    "category": "web",
+    "status": "Berjalan",
+    "gradeTarget": "AB",
+    "description": "Penilaian kerentanan aplikasi web (OWASP Top 10), penerapan Content Security Policy, SRI, dan validasi input sisi klien.",
+    "tech": [
+      "OWASP",
+      "CSP",
+      "Penetration Testing"
+    ],
+    "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "security",
+      "owasp",
+      "csp"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "AB"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Berjalan"
+      }
+    ]
+  },
+  {
+    "id": "12S3202",
+    "title": "Gudang Data dan Kecerdasan Bisnis",
+    "role": "Data Engineer",
+    "category": "database",
+    "status": "Berjalan",
+    "gradeTarget": "A",
+    "description": "Perancangan data warehouse skema bintang, proses ETL, dan dasbor kecerdasan bisnis untuk analisis penjualan.",
+    "tech": [
+      "Star Schema",
+      "ETL",
+      "Power BI"
+    ],
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "warehouse",
+      "etl",
+      "dashboard"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Berjalan"
+      }
+    ]
+  },
+  {
+    "id": "12S3205",
+    "title": "Penambangan Data",
+    "role": "Data Analyst",
+    "category": "ai",
+    "status": "Selesai",
+    "gradeTarget": "AB",
+    "description": "Eksplorasi dataset, klasifikasi dan klasterisasi, serta evaluasi model dengan metrik akurasi, presisi, dan recall.",
+    "tech": [
+      "Python",
+      "scikit-learn",
+      "Pandas"
+    ],
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "classification",
+      "clustering",
+      "pandas"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "AB"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Selesai"
+      }
+    ]
+  },
+  {
+    "id": "12S4054",
+    "title": "Sistem Rekomendasi",
+    "role": "ML Engineer",
+    "category": "ai",
+    "status": "Terencana",
+    "gradeTarget": "A",
+    "description": "Pembangunan mesin rekomendasi dengan collaborative filtering dan content-based filtering untuk katalog produk.",
+    "tech": [
+      "Python",
+      "Collaborative Filtering",
+      "Cosine Similarity"
+    ],
+    "image": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "recommender",
+      "filtering",
+      "similarity"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Terencana"
+      }
+    ]
+  },
+  {
+    "id": "12S3203",
+    "title": "Proyek Sistem Informasi",
+    "role": "Project Lead",
+    "category": "mpsi",
+    "status": "Terencana",
+    "gradeTarget": "A",
+    "description": "Proyek terpadu analisis, perancangan, dan implementasi sistem informasi lengkap dengan dokumentasi dan deployment.",
+    "tech": [
+      "UML",
+      "Git",
+      "GitHub Pages"
+    ],
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+    "link": "https://github.com/FredrickAritonang",
+    "tags": [
+      "capstone",
+      "uml",
+      "deployment"
+    ],
+    "metrics": [
+      {
+        "label": "Target nilai",
+        "value": "A"
+      },
+      {
+        "label": "Teknologi",
+        "value": "3"
+      },
+      {
+        "label": "Status",
+        "value": "Terencana"
+      }
+    ]
+  }
+]

@@ -3,510 +3,223 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portofolio & Service Portal - Fredrick Laurensius</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://images.unsplash.com; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://jsonplaceholder.typicode.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="description" content="Portofolio dan portal layanan berarsitektur decoupled: konten dimuat asinkron dari JSON (Client-Side Rendering).">
+  <meta name="theme-color" content="#0b1220">
+  <title>Portofolio & Portal Layanan | Decoupled CSR</title>
 
-  <!-- Bootstrap 5.3.3 CSS CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
-  <!-- Bootstrap Icons CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
-  
-  <!-- Custom CSS Overrides -->
-  <link rel="stylesheet" href="style.css">
+  <!-- Performa: ikon inline (hindari 404 favicon.ico), koneksi dini ke CDN, dan unduh JSON paralel dengan skrip -->
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preload" as="fetch" href="data/projects.json" crossorigin="anonymous">
+  <link rel="preload" as="fetch" href="data/profile.json" crossorigin="anonymous">
+  <link rel="preload" as="fetch" href="data/services.json" crossorigin="anonymous">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/custom-style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  <script defer src="js/api-service.js"></script>
+  <script defer src="js/app.js"></script>
 </head>
-<body>
+<body class="bg-light">
+  <a href="#konten" class="visually-hidden-focusable position-absolute p-2 bg-white text-dark">Lewati ke konten</a>
 
-  <!-- 1. Responsive Navbar Sticky -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm py-3 border-bottom border-secondary border-opacity-25">
+  <header class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
     <div class="container">
-      <button class="navbar-toggler ms-auto border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#tentang">
+        <span class="badge bg-primary px-2 py-1">FLA</span>
+        <span id="brandName" class="fw-bold">Memuat nama...</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false" aria-label="Buka menu navigasi">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="mainNavbar">
-        <ul class="navbar-nav ms-auto gap-lg-3">
-          <li class="nav-item"><a class="nav-link active fw-medium" href="#hero">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link fw-medium" href="#about">Tentang Saya</a></li>
-          <li class="nav-item"><a class="nav-link fw-medium" href="#sertifikasi">Sertifikasi & Publikasi</a></li>
-          <li class="nav-item"><a class="nav-link fw-medium" href="#portofolio">Portofolio</a></li>
-          <li class="nav-item"><a class="nav-link fw-medium" href="#layanan">Layanan & Kontak</a></li>
+      <nav class="collapse navbar-collapse" id="mainNav" aria-label="Navigasi utama">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sertifikat">Sertifikat</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portofolio">Portofolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#layanan">Layanan</a></li>
+          <li class="nav-item"><a class="nav-link" href="#formulir">Formulir</a></li>
         </ul>
-      </div>
+        <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="offcanvas"
+                data-bs-target="#orderHistory" aria-controls="orderHistory">
+          Riwayat pesanan <span id="orderCountBadge" class="badge bg-danger">0</span>
+        </button>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <!-- 2. Hero Section -->
-  <section id="hero" class="hero-section py-5 text-white">
-    <div class="container py-5">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-7">
-          <h1 class="display-4 fw-bold text-white mb-3">Halo, Saya Fredrick Laurensius Aritonang</h1>
-          <p class="lead text-light text-opacity-75 mb-4">
-            Mahasiswa S1 Sistem Informasi Institut Teknologi Del yang berfokus pada Perancangan & Pengembangan Sistem Informasi, Pengelolaan Basis Data, Analisis Bisnis, serta Infrastruktur Jaringan Komputer.
-          </p>
-          <div class="d-flex flex-wrap gap-3">
-            <a href="#portofolio" class="btn btn-gradient btn-lg px-4 py-3 rounded-pill">
-              <i class="bi bi-briefcase-fill me-2"></i>Lihat Proyek
-            </a>
-            <a href="#layanan" class="btn btn-outline-custom btn-lg px-4 py-3 rounded-pill">
-              <i class="bi bi-envelope-fill me-2"></i>Hubungi Saya
-            </a>
+  <main id="konten" class="container my-5 pt-3">
+    <!-- Profil -->
+    <section id="tentang" class="card border-0 shadow-sm p-4 mb-4" aria-busy="true">
+      <div class="row align-items-center">
+        <div class="col-md-3 text-center mb-3 mb-md-0 position-relative">
+          <img id="bioPhoto" src="assets/img/pasfoto.png" alt="Foto profil" class="rounded-circle img-thumbnail shadow-sm avatar">
+          <span id="bioStatus" class="badge bg-success position-absolute bottom-0 start-50 translate-middle-x">Aktif</span>
+        </div>
+        <div class="col-md-9">
+          <h1 id="bioName" class="h2 fw-bold mb-1">Memuat nama...</h1>
+          <p id="bioDetails" class="fw-semibold mb-2">Memuat detail...</p>
+          <p id="bioDescription" class="mb-0">Memuat deskripsi...</p>
+        </div>
+      </div>
+      <div class="row mt-4 g-3">
+        <div class="col-md-6">
+          <div class="p-3 bg-light rounded border h-100">
+            <h2 class="h5 fw-bold">Fokus keahlian</h2>
+            <ul id="skillsList" class="mb-0"><li>Memuat keahlian...</li></ul>
           </div>
         </div>
-        <div class="col-lg-5 text-center">
-          <div class="profile-avatar-wrapper d-inline-block">
-            <img src="pasfoto.png.png" alt="Pasfoto Fredrick Laurensius Aritonang" class="img-fluid" style="width: 270px; height: 270px; object-fit: cover;">
+        <div class="col-md-6">
+          <div class="p-3 bg-light rounded border h-100">
+            <h2 class="h5 fw-bold">Alur kerja proyek</h2>
+            <ol id="workflowList" class="mb-0"><li>Memuat alur kerja...</li></ol>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 3. Section Tentang Saya -->
-  <section id="about" class="py-5 bg-colored-light">
-    <div class="container py-4">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-6">
-          <h2 class="fw-bold mb-3 section-title">Tentang Saya</h2>
-          <p class="text-secondary lead mt-3">
-            Saya adalah mahasiswa aktif S1 Sistem Informasi di Institut Teknologi Del yang memiliki ketertarikan tinggi dalam pengembangan solusi teknologi informasi terintegrasi.
-          </p>
-          <p class="text-muted">
-            Melalui kurikulum S1 Sistem Informasi IT Del, saya mendalami perancangan dan pengujian aplikasi web, pemrograman berorientasi objek (OOP), manajemen basis data, jaringan komputer, serta analisis dan perancangan sistem untuk mendukung kebutuhan bisnis digital.
-          </p>
-          <div class="row g-3 mt-3">
-            <div class="col-sm-6">
-              <div class="feature-box p-3 d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-primary fs-4 me-3"></i>
-                <span class="fw-semibold text-dark">Pemrograman & Pengujian Web</span>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="feature-box p-3 d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-info fs-4 me-3"></i>
-                <span class="fw-semibold text-dark">Jaringan Komputer & OS</span>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="feature-box p-3 d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-primary fs-4 me-3"></i>
-                <span class="fw-semibold text-dark">Pemrograman Berorientasi Objek</span>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="feature-box p-3 d-flex align-items-center">
-                <i class="bi bi-check-circle-fill text-info fs-4 me-3"></i>
-                <span class="fw-semibold text-dark">Analisis & Perancangan Sistem</span>
-              </div>
-            </div>
-          </div>
+    <!-- Sertifikat -->
+    <section id="sertifikat" class="card border-0 shadow-sm p-4 mb-4">
+      <h2 class="h3 fw-bold mb-0">Sertifikat dan pengakuan akademik</h2>
+      <div class="row g-3 mt-2" id="certificatesGrid" aria-live="polite"></div>
+    </section>
+
+    <!-- Portofolio (CSR + 4 UI state) -->
+    <section id="portofolio" class="card border-0 shadow-sm p-4 mb-4">
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3">
+        <div>
+          <h2 class="h3 fw-bold mb-0">Portofolio karya dan rekap proyek</h2>
+          <p class="small mb-0" id="projectsSummary" aria-live="polite">Memuat proyek...</p>
         </div>
-
-        <div class="col-lg-6">
-          <div class="card custom-card p-4 p-md-5">
-            <h5 class="fw-bold mb-4 text-dark"><i class="bi bi-award-fill text-primary me-2"></i>Fokus Kompetensi Mata Kuliah</h5>
-            <ul class="list-unstyled mb-0 d-grid gap-4">
-              <li class="d-flex align-items-start">
-                <div class="p-3 bg-primary bg-opacity-10 rounded-4 text-primary me-3 fs-4">
-                  <i class="bi bi-code-square"></i>
-                </div>
-                <div>
-                  <strong class="text-dark">Pengembangan Perangkat Lunak:</strong>
-                  <div class="text-muted small mt-1">Pemrograman & Pengujian Aplikasi Web, OOP, Pemrograman Prosedural</div>
-                </div>
-              </li>
-              <li class="d-flex align-items-start">
-                <div class="p-3 bg-info bg-opacity-10 rounded-4 text-info me-3 fs-4">
-                  <i class="bi bi-diagram-3"></i>
-                </div>
-                <div>
-                  <strong class="text-dark">Infrastruktur & Sistem:</strong>
-                  <div class="text-muted small mt-1">Jaringan Komputer, Sistem Operasi, Arsitektur & Organisasi Komputer</div>
-                </div>
-              </li>
-              <li class="d-flex align-items-start">
-                <div class="p-3 bg-primary bg-opacity-10 rounded-4 text-primary me-3 fs-4">
-                  <i class="bi bi-database"></i>
-                </div>
-                <div>
-                  <strong class="text-dark">Data & Analisis Bisnis:</strong>
-                  <div class="text-muted small mt-1">Basis Data (+P), Analisis & Perancangan Sistem, Manajemen Proses Bisnis</div>
-                </div>
-              </li>
-            </ul>
+        <div class="d-flex flex-column flex-sm-row gap-2">
+          <label class="visually-hidden" for="projectSearch">Cari proyek</label>
+          <input type="search" id="projectSearch" class="form-control form-control-sm" placeholder="Cari judul atau teknologi" maxlength="60" autocomplete="off">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Filter kategori proyek" id="filterGroup">
+            <button type="button" class="btn btn-primary filter-btn active" data-filter="all" aria-pressed="true">Semua</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="web" aria-pressed="false">Web</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="database" aria-pressed="false">Database</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="ai" aria-pressed="false">AI</button>
+            <button type="button" class="btn btn-outline-primary filter-btn" data-filter="mpsi" aria-pressed="false">MPSI</button>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+      <div class="row" id="projectsGrid" aria-busy="true"><!-- diisi js/app.js --></div>
+    </section>
 
-  <!-- 4. Section Sertifikasi & Publikasi (Keterangan Dihapus Bersih) -->
-  <section id="sertifikasi" class="py-5 bg-colored-alt">
-    <div class="container py-4">
-      <div class="text-center mb-5">
-        <h2 class="fw-bold section-title">Sertifikasi & Publikasi Ilmiah</h2>
-      </div>
+    <!-- Katalog layanan -->
+    <section id="layanan" class="card border-0 shadow-sm p-4 mb-4">
+      <h2 class="h3 fw-bold mb-3">Paket layanan</h2>
+      <div class="row g-3" id="servicesGrid" aria-busy="true"></div>
+    </section>
 
-      <div class="row g-4 justify-content-center">
-        <!-- Item 1: IBM SkillsBuild -->
-        <div class="col-lg-12">
-          <div class="card custom-card">
-            <div class="row g-0 align-items-center">
-              <div class="col-md-4 p-3 text-center bg-white rounded-start">
-                <img src="sertifikat-ibm.png" alt="Sertifikat IBM SkillsBuild" class="img-fluid rounded shadow-sm" style="max-height: 190px; object-fit: contain;">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body p-4">
-                  <div class="d-flex align-items-center justify-content-between flex-wrap mb-2 gap-2">
-                    <span class="badge bg-primary px-3 py-2 rounded-pill fs-6">IBM SkillsBuild x Hacktiv8</span>
-                    <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i>28 Juli 2026</span>
-                  </div>
-                  <h4 class="fw-bold text-dark mb-2">IT - AI Agent for Programming</h4>
-                  <p class="text-secondary small mb-3">
-                    Program IBM SkillsBuild University Education bekerjasama dengan Hacktiv8 Indonesia. Berfokus pada perancangan, pembuatan, dan implementasi AI Agent serta Workflow Integration.
-                  </p>
-                  <div class="row g-2">
-                    <div class="col-4">
-                      <div class="p-2 rounded-3 text-center" style="background: rgba(37, 99, 235, 0.08);">
-                        <div class="fw-bold text-primary fs-5">91.95</div>
-                        <div class="small text-muted" style="font-size: 0.75rem;">Score</div>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="p-2 rounded-3 text-center" style="background: rgba(2, 132, 199, 0.08);">
-                        <div class="fw-bold fs-5 text-info">9 Jam</div>
-                        <div class="small text-muted" style="font-size: 0.75rem;">Duration</div>
-                      </div>
-                    </div>
-                    <div class="col-4">
-                      <div class="p-2 rounded-3 text-center" style="background: rgba(6, 182, 212, 0.08);">
-                        <div class="fw-bold fs-5 text-dark">Langflow</div>
-                        <div class="small text-muted" style="font-size: 0.75rem;">Tools</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <!-- Formulir -->
+    <section id="formulir" class="card border-0 shadow-sm p-4 mb-4">
+      <h2 class="h3 fw-bold">Ajukan permintaan layanan</h2>
+      <p class="small">Dikirim lewat <code>fetch()</code> HTTP POST (JSON) tanpa memuat ulang halaman.</p>
+
+      <form id="consultationForm" class="mt-2" novalidate>
+        <fieldset class="border p-3 rounded mb-3 bg-light">
+          <legend class="float-none w-auto px-2 fs-6 fw-bold bg-primary text-white rounded">Profil pemohon</legend>
+          <div class="mb-3">
+            <label for="fullname" class="form-label fw-semibold">Nama lengkap <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="fullname" name="fullname" maxlength="80" autocomplete="name" required>
+            <div class="invalid-feedback">Nama lengkap wajib diisi.</div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email aktif <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="email" name="email" maxlength="100" placeholder="nama@email.com" autocomplete="email" required>
+            <div class="invalid-feedback">Masukkan alamat email yang valid.</div>
+          </div>
+        </fieldset>
+
+        <fieldset class="border p-3 rounded mb-3 bg-light">
+          <legend class="float-none w-auto px-2 fs-6 fw-bold bg-primary text-white rounded">Detail permintaan</legend>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="packageId" class="form-label fw-semibold">Paket layanan <span class="text-danger">*</span></label>
+              <select class="form-select" id="packageId" name="packageId" required>
+                <option value="">Pilih paket</option>
+              </select>
+              <div class="invalid-feedback">Pilih salah satu paket.</div>
+            </div>
+            <div class="col-md-6">
+              <label for="topic" class="form-label fw-semibold">Topik mata kuliah <span class="text-danger">*</span></label>
+              <select class="form-select" id="topic" name="topic" required>
+                <option value="">Pilih topik</option>
+              </select>
+              <div class="invalid-feedback">Pilih salah satu topik.</div>
             </div>
           </div>
-        </div>
-
-        <!-- Item 2: Nalara Academy -->
-        <div class="col-lg-12">
-          <div class="card custom-card">
-            <div class="row g-0 align-items-center">
-              <div class="col-md-4 p-3 text-center bg-white rounded-start">
-                <img src="sertifikat-nalara.png" alt="Sertifikat Nalara Academy" class="img-fluid rounded shadow-sm" style="max-height: 190px; object-fit: contain;">
+          <div class="mb-3">
+            <span class="form-label d-block fw-semibold" id="priorityLabel">Prioritas <span class="text-danger">*</span></span>
+            <div role="radiogroup" aria-labelledby="priorityLabel">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="priority" id="p1" value="Reguler" checked>
+                <label class="form-check-label" for="p1">Reguler (1-2 minggu)</label>
               </div>
-              <div class="col-md-8">
-                <div class="card-body p-4">
-                  <div class="d-flex align-items-center justify-content-between flex-wrap mb-2 gap-2">
-                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fs-6">Nalara Academy x Universitas Brawijaya</span>
-                    <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i>25 Agustus 2026</span>
-                  </div>
-                  <h4 class="fw-bold text-dark mb-2">National AI & Deep Learning Acceleration Bootcamp (Level Intermediate)</h4>
-                  <p class="text-secondary small mb-2">
-                    Sertifikat Kelulusan No: <strong>NLR-CERT-INT-B01-0046</strong>. Telah berhasil menyelesaikan Program Level Intermediate dari Nalara Academy & Forum Research Group Universitas Brawijaya serta memenuhi standar penilaian pembelajaran.
-                  </p>
-                  <div class="text-muted small">
-                    <i class="bi bi-patch-check-fill text-primary me-1"></i>Diberikan oleh CEO Nalara Academy & Pembina Forum Research Group Universitas Brawijaya.
-                  </div>
-                </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="priority" id="p2" value="Ekspres">
+                <label class="form-check-label" for="p2">Ekspres (3-5 hari)</label>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Item 3: LOA Jurnal SIMASI -->
-        <div class="col-lg-12">
-          <div class="card custom-card">
-            <div class="row g-0 align-items-center">
-              <div class="col-md-4 p-3 text-center bg-white rounded-start">
-                <img src="loa-simasi.png" alt="Letter of Acceptance Jurnal SIMASI" class="img-fluid rounded shadow-sm" style="max-height: 190px; object-fit: contain;">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body p-4">
-                  <div class="d-flex align-items-center justify-content-between flex-wrap mb-2 gap-2">
-                    <span class="badge bg-success px-3 py-2 rounded-pill fs-6">Publikasi Jurnal Ilmiah (LOA)</span>
-                    <span class="text-muted small"><i class="bi bi-journal-check me-1"></i>Terbit: Juni 2026</span>
-                  </div>
-                  <h4 class="fw-bold text-dark mb-2">Kajian Literatur Trend Penelitian di Bidang Internet of Things</h4>
-                  <p class="text-secondary small mb-2">
-                    <strong>Jurnal Penelitian SIMASI (Jurnal Ilmiah Sistem Informasi)</strong> - Vol. 6 No. 1. Diterbitkan oleh Universitas Bina Bangsa & terindeks Garuda, Google Scholar, Dimensions, serta Sinta 5.
-                  </p>
-                  <div class="text-muted small">
-                    <i class="bi bi-people-fill me-1"></i><strong>Penulis Utama:</strong> Fredrick Laurensius Aritonang (bersama Tim Peneliti).
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold">Deskripsi permintaan <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="description" name="description" rows="3" minlength="10" maxlength="500" required></textarea>
+            <div class="invalid-feedback">Tulis minimal 10 karakter.</div>
           </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Portofolio Section (Keterangan Dihapus Bersih) -->
-  <section id="portofolio" class="py-5 bg-colored-portfolio">
-    <div class="container py-4">
-      <div class="text-center mb-5">
-        <h2 class="fw-bold section-title">Portofolio</h2>
-      </div>
-
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        <!-- Proyek 1: Movie Recommendation System -->
-        <div class="col">
-          <div class="card h-100 custom-card overflow-hidden">
-            <div class="card-body p-4 d-flex flex-column">
-              <span class="badge bg-primary mb-3 align-self-start px-3 py-2 rounded-pill">Python & Linear Algebra</span>
-              <h5 class="card-title fw-bold text-dark mb-3">Movie Recommendation System</h5>
-              <p class="card-text text-muted flex-grow-1">Implementasi konsep Aljabar Linier dan Collaborative Filtering untuk rekomendasi film.</p>
-              <button class="btn btn-outline-primary rounded-pill w-100 mt-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#modalProject1">
-                <i class="bi bi-arrow-right-circle me-1"></i>Detail Proyek
-              </button>
-            </div>
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" id="agree" name="agree" required>
+            <label class="form-check-label small" for="agree">Saya menyetujui ketentuan pemrosesan data. <span class="text-danger">*</span></label>
+            <div class="invalid-feedback">Persetujuan diperlukan sebelum mengirim.</div>
           </div>
-        </div>
+        </fieldset>
 
-        <!-- Proyek 2: Child Immunization Tracker -->
-        <div class="col">
-          <div class="card h-100 custom-card overflow-hidden">
-            <div class="card-body p-4 d-flex flex-column">
-              <span class="badge bg-success mb-3 align-self-start px-3 py-2 rounded-pill">UI/UX & Mobile App</span>
-              <h5 class="card-title fw-bold text-dark mb-3">Child Immunization Tracker</h5>
-              <p class="card-text text-muted flex-grow-1">Perancangan aplikasi mobile "Jejak Imun" untuk pemantauan imunisasi anak berbasis Figma.</p>
-              <button class="btn btn-outline-primary rounded-pill w-100 mt-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#modalProject2">
-                <i class="bi bi-arrow-right-circle me-1"></i>Detail Proyek
-              </button>
-            </div>
-          </div>
-        </div>
+        <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-2 fw-bold">Kirim permintaan</button>
+      </form>
+    </section>
+  </main>
 
-        <!-- Proyek 3: Hospital Management System -->
-        <div class="col">
-          <div class="card h-100 custom-card overflow-hidden">
-            <div class="card-body p-4 d-flex flex-column">
-              <span class="badge bg-warning text-dark mb-3 align-self-start px-3 py-2 rounded-pill">Java OOP & SQLite</span>
-              <h5 class="card-title fw-bold text-dark mb-3">Hospital Management System</h5>
-              <p class="card-text text-muted flex-grow-1">Sistem manajemen rumah sakit berbasis console Java dengan arsitektur berlapis dan JDBC.</p>
-              <button class="btn btn-outline-primary rounded-pill w-100 mt-3 fw-semibold" data-bs-toggle="modal" data-bs-target="#modalProject3">
-                <i class="bi bi-arrow-right-circle me-1"></i>Detail Proyek
-              </button>
-            </div>
-          </div>
+  <!-- Tepat 1 Universal Dynamic Modal -->
+  <div class="modal fade" id="universalProjectModal" tabindex="-1" aria-labelledby="projectModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h2 class="modal-title h5 fw-bold" id="projectModalTitle">Judul proyek</h2>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Tutup"></button>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Modals Proyek -->
-  <div class="modal fade" id="modalProject1" tabindex="-1" aria-labelledby="modalProject1Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content p-2">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold text-dark" id="modalProject1Label">Movie Recommendation System Using Collaborative Filtering and Linear Algebra</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="text-secondary small">Mei 2026 – Juni 2026 | Associated with Institut Teknologi Del</p>
-          <p>Proyek mata kuliah Aljabar Linier Semester Genap 2025/2026 yang mengimplementasikan konsep matematika dan matriks untuk membangun sistem rekomendasi film berbasis <i>Collaborative Filtering</i>.</p>
-          <hr>
-          <ul class="mb-0">
-            <li><strong>Teknologi/Keahlian:</strong> Python, Linear Algebra, Data Analysis</li>
-            <li><strong>Peran:</strong> Developer & Data Analyst</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
-        </div>
+        <div class="modal-body p-4" id="projectModalBody"></div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade" id="modalProject2" tabindex="-1" aria-labelledby="modalProject2Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content p-2">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold text-dark" id="modalProject2Label">Child Immunization Tracker - Jejak Imun</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="text-secondary small">April 2026 – Mei 2026</p>
-          <p>Memimpin tim multidisiplin dalam merancang aplikasi mobile penjejak imunisasi anak. Mengoordinasikan perencanaan proyek, alokasi tugas, dan kolaborasi tim sembari berkontribusi aktif pada desain UI/UX serta pembuatan prototipe interaktif (<i>high-fidelity</i>) menggunakan Figma.</p>
-          <hr>
-          <ul class="mb-0">
-            <li><strong>Teknologi/Keahlian:</strong> User Interface Design, User Experience Design (UED), Figma, High-Fidelity Prototyping</li>
-            <li><strong>Peran:</strong> Team Lead & UI/UX Designer</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
-        </div>
-      </div>
+  <!-- Riwayat pesanan (localStorage) -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="orderHistory" aria-labelledby="orderHistoryTitle">
+    <div class="offcanvas-header">
+      <h2 class="offcanvas-title h5" id="orderHistoryTitle">Riwayat pesanan</h2>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Tutup"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="list-unstyled mb-3" id="orderList"></ul>
+      <button type="button" class="btn btn-outline-danger btn-sm" id="clearOrdersBtn">Hapus semua riwayat</button>
     </div>
   </div>
 
-  <div class="modal fade" id="modalProject3" tabindex="-1" aria-labelledby="modalProject3Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content p-2">
-        <div class="modal-header">
-          <h5 class="modal-title fw-bold text-dark" id="modalProject3Label">Hospital Management System</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="text-secondary small">April 2026 – Mei 2026</p>
-          <p>Pengembangan sistem manajemen rumah sakit berbasis <i>console</i> menggunakan Java untuk mengelola data pasien, dokter, dan janji temu. Sistem memanfaatkan SQLite melalui JDBC serta menerapkan konsep OOP (Pewarisan/Inheritance, Java Collection Framework), pola <i>Data Mapper</i>, dan arsitektur berlapis untuk memisahkan model, basis data, logika bisnis, dan antarmuka pengguna.</p>
-          <hr>
-          <ul class="mb-0">
-            <li><strong>Teknologi/Keahlian:</strong> Java Database Connectivity (JDBC), Java Collection Framework, SQLite, OOP Architecture</li>
-            <li><strong>Peran:</strong> Java Developer</li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
-        </div>
+  <!-- Toast -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header text-white bg-success">
+        <strong class="me-auto" id="toastTitle">Notifikasi</strong>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Tutup"></button>
       </div>
+      <div class="toast-body" id="toastBody"></div>
     </div>
   </div>
 
-  <!-- 6. Section Formulir Layanan & Informasi Kontak Ringkas -->
-  <section id="layanan" class="py-5 bg-colored-alt">
-    <div class="container py-4">
-      <div class="row justify-content-center g-4">
-        
-        <!-- Kartu Informasi Kontak Ringkas & Memanjang -->
-        <div class="col-lg-5">
-          <div class="contact-sidebar p-4 p-md-5 text-white h-100 d-flex flex-column justify-content-center">
-            <div>
-              <h4 class="fw-bold mb-4">Informasi Kontak</h4>
-              
-              <!-- WhatsApp -->
-              <div class="contact-item mb-3">
-                <a href="https://wa.me/6282269342866" target="_blank" rel="noopener noreferrer" class="text-success text-decoration-none d-flex align-items-center">
-                  <i class="bi bi-whatsapp fs-2 me-3 flex-shrink-0"></i>
-                  <div>
-                    <div class="text-light text-opacity-75 small">WhatsApp</div>
-                    <span class="fs-6 fw-semibold text-white">082269342866</span>
-                  </div>
-                </a>
-              </div>
-
-              <!-- Email -->
-              <div class="contact-item mb-3">
-                <a href="mailto:erickaritonang93@gmail.com" class="text-danger text-decoration-none d-flex align-items-center">
-                  <i class="bi bi-envelope-fill fs-2 me-3 flex-shrink-0"></i>
-                  <div class="overflow-hidden">
-                    <div class="text-light text-opacity-75 small">Email</div>
-                    <span class="fw-semibold text-white contact-text-email">erickaritonang93@gmail.com</span>
-                  </div>
-                </a>
-              </div>
-
-              <!-- LinkedIn -->
-              <div class="contact-item mb-3">
-                <a href="https://www.linkedin.com/in/Fredrick%20Laurensius%20Aritonang" target="_blank" rel="noopener noreferrer" class="text-primary text-decoration-none d-flex align-items-center">
-                  <i class="bi bi-linkedin fs-2 me-3 flex-shrink-0"></i>
-                  <div>
-                    <div class="text-light text-opacity-75 small">LinkedIn</div>
-                    <span class="fs-6 fw-semibold text-white">Fredrick Laurensius Aritonang</span>
-                  </div>
-                </a>
-              </div>
-
-              <!-- GitHub -->
-              <div class="contact-item">
-                <a href="https://github.com/FredrickAritonang" target="_blank" rel="noopener noreferrer" class="text-light text-decoration-none d-flex align-items-center">
-                  <i class="bi bi-github fs-2 me-3 flex-shrink-0"></i>
-                  <div>
-                    <div class="text-light text-opacity-75 small">GitHub</div>
-                    <span class="fs-6 fw-semibold text-white">FredrickAritonang</span>
-                  </div>
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Formulir Layanan -->
-        <div class="col-lg-7">
-          <div class="card card-form-wrapper p-4 p-md-5 bg-white">
-            <h3 class="fw-bold mb-2 text-dark">Formulir Layanan & Kontak</h3>
-            <p class="text-muted mb-4">Silakan isi formulir di bawah ini untuk berdiskusi atau mengaitkan proyek kerja sama.</p>
-
-            <form class="needs-validation" novalidate>
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-3" id="floatingName" placeholder="Nama Lengkap" required>
-                <label for="floatingName"><i class="bi bi-person me-2"></i>Nama Lengkap *</label>
-                <div class="invalid-feedback">Nama lengkap wajib diisi.</div>
-              </div>
-
-              <div class="form-floating mb-3">
-                <input type="email" class="form-control rounded-3" id="floatingEmail" placeholder="nama@email.com" required>
-                <label for="floatingEmail"><i class="bi bi-envelope me-2"></i>Alamat Email *</label>
-                <div class="invalid-feedback">Alamat email valid wajib disertakan.</div>
-              </div>
-
-              <div class="form-floating mb-3">
-                <select class="form-select rounded-3" id="floatingSelect" aria-label="Kategori Layanan" required>
-                  <option selected disabled value="">Pilih Kategori Layanan...</option>
-                  <option value="1">Pemrograman & Pengujian Web (Aplikasi Web Responsive)</option>
-                  <option value="2">Pemrograman Berorientasi Objek (OOP Java) & Basis Data</option>
-                  <option value="3">Analisis & Perancangan Sistem / Manajemen Proses Bisnis</option>
-                  <option value="4">Infrastruktur Jaringan Komputer & Sistem Operasi Linux</option>
-                </select>
-                <label for="floatingSelect"><i class="bi bi-grid me-2"></i>Kategori Layanan *</label>
-                <div class="invalid-feedback">Harap pilih kategori layanan yang diminati.</div>
-              </div>
-
-              <div class="form-floating mb-3">
-                <textarea class="form-control rounded-3" id="floatingPesan" placeholder="Pesan Anda" style="height: 120px" required></textarea>
-                <label for="floatingPesan"><i class="bi bi-chat-left-text me-2"></i>Detail Pesan *</label>
-                <div class="invalid-feedback">Pesan tidak boleh kosong.</div>
-              </div>
-
-              <div class="form-check mb-4">
-                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                <label class="form-check-label text-muted" for="invalidCheck">
-                  Saya menyetujui syarat dan ketentuan layanan yang berlaku.
-                </label>
-                <div class="invalid-feedback">Anda harus menyetujui syarat sebelum mengirimkan.</div>
-              </div>
-
-              <button class="btn btn-gradient btn-lg w-100 py-3 rounded-3" type="submit">
-                <i class="bi bi-send-fill me-2"></i>Kirim Pesan
-              </button>
-            </form>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-dark text-white py-4 text-center border-top border-secondary border-opacity-25">
-    <div class="container">
-      <p class="mb-0 text-muted">&copy; 2026 Fredrick Laurensius Aritonang (12S24001) - Institut Teknologi Del</p>
-    </div>
-  </footer>
-
-  <!-- Bootstrap 5.3.3 JS Bundle CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-  
-  <script>
-    (() => {
-      'use strict'
-      const forms = document.querySelectorAll('.needs-validation')
-      Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-    })()
-  </script>
 </body>
 </html>

@@ -1,0 +1,294 @@
+{
+  "packages": [
+    {
+      "id": "pkg-web",
+      "name": "Konsultasi Antarmuka Web",
+      "tagline": "Rapikan HTML, CSS, dan aksesibilitas halaman Anda",
+      "price": 150000,
+      "currency": "IDR",
+      "unit": "per sesi",
+      "duration": "1-2 jam",
+      "popular": false,
+      "features": [
+        "Review struktur HTML semantik",
+        "Perbaikan layout responsif Bootstrap 5",
+        "Checklist aksesibilitas WCAG 2.2 AA",
+        "Ringkasan rekomendasi tertulis"
+      ]
+    },
+    {
+      "id": "pkg-data",
+      "name": "Perancangan Basis Data",
+      "tagline": "Dari kebutuhan bisnis menjadi skema yang rapi",
+      "price": 350000,
+      "currency": "IDR",
+      "unit": "per proyek",
+      "duration": "3-5 hari",
+      "popular": true,
+      "features": [
+        "Analisis kebutuhan dan ERD",
+        "Normalisasi hingga 3NF",
+        "Contoh query dan pengindeksan dasar",
+        "Dokumentasi skema"
+      ]
+    },
+    {
+      "id": "pkg-sia",
+      "name": "Pendampingan Proyek Sistem Informasi",
+      "tagline": "Pendampingan analisis hingga implementasi",
+      "price": 750000,
+      "currency": "IDR",
+      "unit": "per proyek",
+      "duration": "2-4 minggu",
+      "popular": false,
+      "features": [
+        "Analisis dan perancangan sistem",
+        "Prototipe antarmuka web",
+        "Manajemen versi Git dan deployment GitHub Pages",
+        "Review berkala tiap minggu"
+      ]
+    },
+    {
+      "id": "pkg-uiux",
+      "name": "Desain UI/UX dan Prototipe",
+      "tagline": "Wireframe hingga prototipe interaktif siap uji",
+      "price": 400000,
+      "currency": "IDR",
+      "unit": "per proyek",
+      "duration": "4-6 hari",
+      "popular": false,
+      "features": [
+        "Riset kebutuhan pengguna singkat",
+        "Wireframe dan alur navigasi",
+        "Prototipe interaktif di Figma",
+        "Laporan evaluasi usability"
+      ]
+    },
+    {
+      "id": "pkg-audit",
+      "name": "Audit Aksesibilitas WCAG",
+      "tagline": "Temukan dan perbaiki hambatan akses pada situs Anda",
+      "price": 250000,
+      "currency": "IDR",
+      "unit": "per halaman",
+      "duration": "1-2 hari",
+      "popular": false,
+      "features": [
+        "Pengujian dengan pembaca layar",
+        "Pemeriksaan kontras dan fokus keyboard",
+        "Daftar temuan berprioritas",
+        "Panduan perbaikan langkah demi langkah"
+      ]
+    },
+    {
+      "id": "pkg-sql",
+      "name": "Optimasi Query dan Indexing",
+      "tagline": "Percepat query lambat dengan analisis rencana eksekusi",
+      "price": 300000,
+      "currency": "IDR",
+      "unit": "per sesi",
+      "duration": "2-3 jam",
+      "popular": false,
+      "features": [
+        "Analisis execution plan",
+        "Rekomendasi indeks yang tepat",
+        "Penulisan ulang query lambat",
+        "Laporan perbandingan sebelum dan sesudah"
+      ]
+    },
+    {
+      "id": "pkg-bi",
+      "name": "Dasbor Kecerdasan Bisnis",
+      "tagline": "Ubah data mentah menjadi dasbor yang mudah dibaca",
+      "price": 600000,
+      "currency": "IDR",
+      "unit": "per proyek",
+      "duration": "1-2 minggu",
+      "popular": false,
+      "features": [
+        "Perancangan model data dan skema bintang",
+        "Proses ETL dasar",
+        "Dasbor interaktif dengan KPI utama",
+        "Dokumentasi dan panduan penggunaan"
+      ]
+    },
+    {
+      "id": "pkg-ml",
+      "name": "Analisis Data dan Model Prediksi",
+      "tagline": "Bangun model prediksi sederhana dari data Anda",
+      "price": 500000,
+      "currency": "IDR",
+      "unit": "per proyek",
+      "duration": "1-2 minggu",
+      "popular": false,
+      "features": [
+        "Eksplorasi dan pembersihan data",
+        "Pemodelan klasifikasi atau regresi",
+        "Evaluasi model dengan metrik terukur",
+        "Notebook Python terdokumentasi"
+      ]
+    },
+    {
+      "id": "pkg-sec",
+      "name": "Review Keamanan Aplikasi Web",
+      "tagline": "Cek celah umum sebelum aplikasi dipublikasikan",
+      "price": 450000,
+      "currency": "IDR",
+      "unit": "per aplikasi",
+      "duration": "3-5 hari",
+      "popular": false,
+      "features": [
+        "Pemeriksaan OWASP Top 10",
+        "Peninjauan CSP, SRI, dan validasi input",
+        "Pengujian XSS dan injeksi dasar",
+        "Rekomendasi perbaikan tertulis"
+      ]
+    },
+    {
+      "id": "pkg-pm",
+      "name": "Manajemen Proyek Agile",
+      "tagline": "Atur sprint, backlog, dan papan Kanban tim Anda",
+      "price": 550000,
+      "currency": "IDR",
+      "unit": "per proyek",
+      "duration": "2-3 minggu",
+      "popular": false,
+      "features": [
+        "Penyusunan product backlog",
+        "Perencanaan sprint dan Kanban board",
+        "Analisis risiko dan KPI proyek",
+        "Retrospektif di akhir sprint"
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "id": "12S1101",
+      "name": "Dasar Sistem Informasi"
+    },
+    {
+      "id": "12S1102",
+      "name": "Pemrograman Visual"
+    },
+    {
+      "id": "10S1201",
+      "name": "Pemrograman Prosedural (+P)"
+    },
+    {
+      "id": "10S1002",
+      "name": "Arsitektur dan Organisasi Komputer (+P)"
+    },
+    {
+      "id": "10S1003",
+      "name": "Basis Data (+P)"
+    },
+    {
+      "id": "12S2101",
+      "name": "Manajemen Proses Bisnis"
+    },
+    {
+      "id": "12S2102",
+      "name": "Algoritma dan Struktur Data"
+    },
+    {
+      "id": "12S2103",
+      "name": "Hukum dan Etika Siber"
+    },
+    {
+      "id": "10S2001",
+      "name": "Jaringan Komputer (+P)"
+    },
+    {
+      "id": "10S2002",
+      "name": "Sistem Operasi (+P)"
+    },
+    {
+      "id": "12S2201",
+      "name": "Analisis dan Perancangan Sistem"
+    },
+    {
+      "id": "12S2202",
+      "name": "UI/UX"
+    },
+    {
+      "id": "12S2203",
+      "name": "Pemrograman Berorientasi Objek"
+    },
+    {
+      "id": "10S3001",
+      "name": "Kecerdasan Buatan (+P)"
+    },
+    {
+      "id": "12S3101",
+      "name": "Pemrograman dan Pengujian Aplikasi Web"
+    },
+    {
+      "id": "12S3102",
+      "name": "Basis Data Lanjut"
+    },
+    {
+      "id": "12S3103",
+      "name": "Manajemen Proyek Sistem Informasi"
+    },
+    {
+      "id": "12S3104",
+      "name": "Kepemimpinan dan Manajemen Sistem Informasi"
+    },
+    {
+      "id": "12S3105",
+      "name": "Keamanan Sistem"
+    },
+    {
+      "id": "12S3201",
+      "name": "Perencanaan Sumber Daya Perusahaan"
+    },
+    {
+      "id": "12S3202",
+      "name": "Gudang Data dan Kecerdasan Bisnis"
+    },
+    {
+      "id": "12S3203",
+      "name": "Proyek Sistem Informasi"
+    },
+    {
+      "id": "12S3204",
+      "name": "Metodologi Penelitian dan Penulisan Ilmiah"
+    },
+    {
+      "id": "12S3205",
+      "name": "Penambangan Data"
+    },
+    {
+      "id": "12S4051",
+      "name": "Sistem Temu Balik Informasi"
+    },
+    {
+      "id": "12S4052",
+      "name": "Visualisasi Data"
+    },
+    {
+      "id": "12S4053",
+      "name": "Pengolahan Data Besar"
+    },
+    {
+      "id": "12S4054",
+      "name": "Sistem Rekomendasi"
+    },
+    {
+      "id": "12S4055",
+      "name": "Audit Teknologi Informasi"
+    },
+    {
+      "id": "12S4056",
+      "name": "Web Cerdas"
+    },
+    {
+      "id": "12S4057",
+      "name": "Pengenalan Pola"
+    },
+    {
+      "id": "12S4058",
+      "name": "Perdagangan Elektronik"
+    }
+  ]
+}

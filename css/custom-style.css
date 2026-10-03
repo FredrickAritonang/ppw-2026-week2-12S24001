@@ -1,0 +1,262 @@
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  --text-white: #ffffff;
+  --text-light: #f1f5f9;
+  --text-muted: #cbd5e1;
+  --card-border: rgba(129, 140, 248, 0.4);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.35);
+}
+
+/* 1. Background Halaman Utama */
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-light);
+}
+
+/* 2. Header & Navbar Sticky */
+header.navbar {
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.navbar-brand .badge {
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  background: linear-gradient(45deg, #2563eb, #3b82f6) !important;
+}
+
+/* 3. SEMUA KARTU UTAMA */
+.card {
+  background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+  color: var(--text-white) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover) !important;
+  border-color: rgba(165, 180, 252, 0.6) !important;
+}
+
+/* 4. SEMUA TEKS & JUDUL TERANG BENDERANG */
+h1, h2, h3, h4, h5, h6, 
+.card-title, 
+.form-label, 
+legend, 
+#bioName, 
+.fw-bold {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+p, .text-secondary, .text-muted, small {
+  color: #e0f2fe !important;
+  font-weight: 400;
+}
+
+#bioDetails {
+  color: #38bdf8 !important;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+/* 5. KOTAK KEAHLIAN & ALUR KERJA (CYAN-INDIGO GLOW) */
+#tentang .bg-light {
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(15, 23, 42, 0.95)) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 14px !important;
+  box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.08), 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+#tentang .bg-light h5 {
+  color: #38bdf8 !important;
+  font-size: 1.1rem;
+  letter-spacing: 0.3px;
+}
+
+#skillsList li, #workflowList li {
+  color: #f8fafc !important;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+#skillsList li::marker {
+  color: #38bdf8;
+  font-weight: bold;
+}
+
+/* 6. SUB-CONTAINER SERTIFIKAT, PROYEK & FORMULIR */
+fieldset.bg-light, #certificatesGrid .card, .project-card {
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(129, 140, 248, 0.35) !important;
+  border-radius: 12px;
+}
+
+.project-card .card-title {
+  color: #ffffff !important;
+  font-size: 1.2rem;
+}
+
+/* 7. FORM INPUT CONTROLS */
+.form-control, .form-select {
+  background-color: rgba(15, 23, 42, 0.9) !important;
+  border-color: rgba(129, 140, 248, 0.5) !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+.form-control::placeholder {
+  color: #94a3b8 !important;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: #0f172a !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.3) !important;
+}
+
+.form-check-label {
+  color: #f1f5f9 !important;
+}
+
+/* 8. BADGES & TECH CHIPS */
+.badge.bg-light {
+  background-color: rgba(30, 41, 59, 0.9) !important;
+  color: #38bdf8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  font-weight: 600;
+}
+
+/* 9. TOMBOL FILTER & DETAIL PROYEK */
+.filter-btn {
+  border-radius: 8px !important;
+  font-weight: 600;
+  padding: 6px 16px;
+  transition: all 0.2s ease;
+  color: #e0f2fe !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+}
+
+.filter-btn:hover {
+  background-color: rgba(56, 189, 248, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.filter-btn.active {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5) !important;
+}
+
+.btn-detail {
+  border-radius: 8px;
+  font-weight: 600;
+  color: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+  transition: all 0.2s ease;
+}
+
+.btn-detail:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+}
+
+/* 10. TOAST NOTIFICATION */
+.toast {
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #1e1b4b;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(129, 140, 248, 0.5);
+}
+
+/* 11. DYNAMIC MODAL STYLING (DARK METALLIC THEME) */
+.modal-content {
+  background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%) !important;
+  border: 1px solid rgba(129, 140, 248, 0.4) !important;
+  border-radius: 16px !important;
+  color: #ffffff !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7) !important;
+}
+
+.modal-header {
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 100%) !important;
+  border-bottom: 1px solid rgba(129, 140, 248, 0.3) !important;
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+}
+
+.modal-body {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+
+.modal-body p.text-secondary {
+  color: #e0f2fe !important;
+}
+
+.modal-body .text-dark,
+.modal-body strong {
+  color: #ffffff !important;
+}
+/* ===== Week 4 additions ===== */
+
+/* Pengganti inline style (CSP tanpa 'unsafe-inline') */
+.avatar { width: 140px; height: 140px; object-fit: cover; }
+.cert-img { height: 180px; object-fit: contain; background-color: #f8fafc; }
+.project-img { height: 180px; object-fit: cover; }
+.modal-img { max-height: 250px; object-fit: cover; }
+
+/* Navigasi & aksesibilitas */
+.navbar .nav-link { color: #e0f2fe; }
+.navbar .nav-link:hover, .navbar .nav-link:focus-visible { color: #38bdf8; }
+:focus-visible { outline: 3px solid #38bdf8; outline-offset: 2px; }
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+code { color: #38bdf8; }
+.grade { color: #38bdf8; }
+
+/* Skeleton loading state */
+.skeleton { background: linear-gradient(90deg, rgba(148,163,184,.15) 25%, rgba(148,163,184,.35) 50%, rgba(148,163,184,.15) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; border-radius: 6px; }
+.skeleton-img { height: 180px; border-radius: 12px 12px 0 0; }
+.skeleton-line { height: 14px; margin-bottom: 12px; }
+.skeleton-card:hover { transform: none; }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+  html { scroll-behavior: auto; }
+  .card { transition: none; }
+}
+
+/* Katalog layanan, metrik, riwayat pesanan */
+.service-card { background: rgba(15, 23, 42, 0.75) !important; }
+.btn-choose { border-radius: 8px; font-weight: 600; color: #38bdf8 !important; border-color: #38bdf8 !important; }
+.btn-choose:hover { background-color: #2563eb !important; border-color: #2563eb !important; color: #fff !important; }
+.metric-box { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 10px; }
+.offcanvas { background: #0f172a; color: #f8fafc; border-left: 1px solid rgba(129, 140, 248, 0.4); }
+.offcanvas .btn-close { filter: invert(1); }
+.order-item { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(129, 140, 248, 0.35); border-radius: 10px; list-style: none; }
+
+/* Validasi form & alert pada tema gelap */
+.invalid-feedback { color: #fda4af; }
+.form-control.is-invalid, .form-select.is-invalid { border-color: #fb7185 !important; }
+.form-control.is-valid, .form-select.is-valid { border-color: #34d399 !important; }
+.alert-danger { background: #7f1d1d; color: #fff; border: 1px solid #fca5a5; }
+.toast-body { color: #fff; }

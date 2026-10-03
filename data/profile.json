@@ -1,0 +1,39 @@
+{
+  "name": "Fredrick Laurensius Aritonang",
+  "nim": "12S24001",
+  "studyProgram": "S1 Sistem Informasi",
+  "institution": "IT Del",
+  "status": "Aktif",
+  "bio": "Fokus pada integrasi bisnis dan teknologi melalui perancangan antarmuka web modern, manajemen basis data, analisis sistem informasi, serta arsitektur jaringan komputer.",
+  "skills": [
+    "Semantic HTML5 & Accessibility (WCAG 2.2)",
+    "Modern CSS (Flexbox & Grid Layout)",
+    "Java Programming & Logic Development",
+    "Arsitektur & Troubleshooting Jaringan Komputer"
+  ],
+  "workflows": [
+    "Analisis kebutuhan sistem dan spesifikasi pengguna",
+    "Perancangan antarmuka web semantik dan wireframe",
+    "Styling estetik responsif dan pengujian aksesibilitas",
+    "Manajemen versi via Git dan pengunggahan ke GitHub Pages"
+  ],
+  "certificates": [
+    {
+      "title": "IT - AI Agent for Programming (IBM SkillsBuild)",
+      "issuer": "Hacktiv8 Indonesia & IBM",
+      "image": "assets/img/sertifikat-ibm.png"
+    },
+    {
+      "title": "Sertifikat Pelatihan / Kompetensi Nalara",
+      "issuer": "Nalara Institute",
+      "image": "assets/img/sertifikat-nalara.png"
+    },
+    {
+      "title": "Letter of Acceptance (LoA) SIMASI",
+      "issuer": "SIMASI IT Del",
+      "image": "assets/img/loa-simasi.png"
+    }
+  ],
+  "photo": "assets/img/pasfoto.png",
+  "tagline": "Mahasiswa S1 Sistem Informasi"
+}
