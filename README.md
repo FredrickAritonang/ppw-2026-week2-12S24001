@@ -99,6 +99,25 @@ Setiap tier hanya mengurus satu tanggung jawab. **Presentation Tier** (`index.ht
 
 Proyek ini memilih CSR di atas static hosting karena datanya kecil, jarang berubah, dan tidak memerlukan server aplikasi. Konsekuensinya: konten awal baru terlihat setelah JS selesai mengambil JSON, itulah alasan skeleton loading dipakai. Pada skala besar, Microservices memisahkan domain bisnis menjadi layanan independen, dengan biaya operasional yang jauh lebih tinggi; untuk portofolio ini hal itu berlebihan.
 
+### Analisis mendalam: Separation of Concerns dan komparasi arsitektur
+
+**1. Pemetaan SoC ke berkas.** SoC memisahkan *apa yang dikerjakan* dari *bagaimana dikerjakan*, sehingga perubahan pada satu lapisan tidak merambat ke lapisan lain (low coupling, high cohesion).
+
+| Lapisan | Berkas | Satu-satunya tanggung jawab | Hal yang sengaja *tidak* dilakukan |
+|---|---|---|---|
+| Struktur | `index.html` | Kerangka semantik dan titik pasang (`#projectsGrid`, `#servicesGrid`, 1 modal) | Tidak memuat satu pun data proyek/layanan |
+| Presentasi | `css/custom-style.css`, `js/app.js` | Gaya, perakitan DOM, event, 4 UI state | Tidak memanggil `fetch()` langsung |
+| Akses data | `js/api-service.js` | URL, timeout, klasifikasi error, kontrak POST | Tidak menyentuh DOM |
+| Data | `data/*.json` | Isi konten terstruktur | Tidak berisi logika atau markup |
+
+Akibat praktisnya: menambah proyek ke-11 cukup menyunting `projects.json` tanpa membuka HTML atau JavaScript; mengganti JSON statis dengan API sungguhan cukup mengubah `ApiService.DATA_BASE`; dan kegagalan `services.json` hanya memunculkan Error di bagian layanan, sedangkan profil dan proyek tetap tampil karena tiap sumber data punya state sendiri.
+
+**2. Komparasi paradigma.** *Monolith SSR* merakit HTML di server pada setiap request; konten awal langsung terbaca mesin pencari, tetapi setiap kunjungan memakai CPU server dan menuntut hosting dengan runtime. *CSR* (pilihan proyek ini) mengirim shell kecil lalu merakit DOM di browser; beban server hampir nol dan TTFB rendah, namun konten bermakna baru muncul setelah JS dan JSON terunduh, sehingga *First Contentful Paint* bergantung pada jaringan klien dan SEO bergantung pada kemampuan crawler menjalankan JavaScript. *Jamstack/SSG* merender HTML saat *build* lalu menyajikannya dari CDN: konten awal cepat dan SEO baik, tetapi setiap perubahan data memerlukan build ulang kecuali digabung dengan hidrasi via API. *Microservices* memecah domain bisnis menjadi layanan independen yang dapat diskalakan terpisah, dengan harga kompleksitas jaringan, konsistensi data, dan operasional.
+
+**3. Mengapa CSR di atas static hosting cocok di sini.** Data portofolio kecil (sekitar 20 kB JSON), jarang berubah, tidak berisi data pribadi dinamis, dan tidak memerlukan autentikasi, sehingga server aplikasi tidak memberi nilai tambah. Dampak negatif CSR dimitigasi dengan: skeleton loading (persepsi kecepatan), `<link rel="preload">` agar JSON diunduh paralel dengan skrip, `defer` agar HTML tidak diblokir, dan `loading="lazy"` untuk gambar. Bila proyek berkembang (misalnya perlu SEO per proyek atau data per pengguna), jalur evolusinya adalah SSG untuk halaman publik dan API sungguhan di belakang `ApiService`, tanpa menulis ulang lapisan presentasi.
+
+**4. Kaitan dengan caching.** Karena shell, CSS, JS, dan JSON adalah berkas statis terpisah, masing-masing dapat di-cache dan divalidasi sendiri (`ETag`/`304`). Pada arsitektur SSR satu halaman dinamis tidak dapat disimpan dengan cara yang sama. Hasil pengukuran ada di bagian 6.
+
 ## 2. Tabel Komparasi Sebelum vs Sesudah Refactoring
 | Aspek | Sebelum (Minggu 3) | Sesudah (Minggu 4) |
 |---|---|---|
