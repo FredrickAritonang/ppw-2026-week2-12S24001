@@ -69,32 +69,21 @@ Keterangan: kotak biru = container milik sistem, biru tua = aktor, abu-abu = sis
 ```mermaid
 sequenceDiagram
   autonumber
-  participant B as Browser
   participant S as Static Server
+  participant B as Browser
   participant D as JSON Provider
 
-  B->>S: GET index.html
-  S-->>B: 200 (shell HTML)
-  B->>S: GET css dan js
-  S-->>B: 200 (css, js)
-  Note over B,S: State Loading: skeleton ditampilkan
-
-  par Unduh paralel
-    B->>D: GET profile.json
-  and
-    B->>D: GET projects.json
-  and
-    B->>D: GET services.json
-  end
-
-  alt Berhasil
-    D-->>B: 200 JSON
-    Note over B,D: State Success atau Empty: kartu dirender
-  else Gagal
-    D-->>B: 4xx, 5xx, atau timeout
-    Note over B,D: State Error: alert dan tombol Coba lagi
-  end
+  B->>S: GET index.html, css, js
+  S-->>B: 200 OK
+  Note over B: Loading: skeleton tampil
+  B->>D: GET profile, projects, services (paralel)
+  D-->>B: 200 JSON
+  Note over B: Success atau Empty: kartu dirender
+  B-xD: Gagal: 4xx, 5xx, atau timeout
+  Note over B: Error: alert dan tombol Coba lagi
 ```
+
+Langkah 4 adalah jalur berhasil (Success atau Empty); langkah 5 adalah jalur gagal (Error). Keduanya alternatif, bukan berurutan.
 
 ### Narasi Separation of Concerns
 Setiap tier hanya mengurus satu tanggung jawab. **Presentation Tier** (`index.html`, `custom-style.css`, `app.js`) hanya memutuskan bagaimana data ditampilkan: merakit DOM, menangani klik, filter, modal, dan validasi form. **Application/API Logic Tier** (`api-service.js`) menjadi satu-satunya pintu keluar jaringan: ia menyusun URL, menambahkan timeout, menerjemahkan kegagalan jaringan menjadi pesan yang dipahami pengguna, dan membungkus POST dalam kontrak JSON. **Data Storage Tier** (`data/*.json`) berisi isi konten tanpa satu pun logika tampilan. Hasilnya, mengganti sumber data menjadi API sungguhan cukup mengubah `ApiService`, dan mengubah isi portofolio cukup menyunting JSON tanpa menyentuh HTML. Pemisahan ini juga membuat tiap lapisan dapat diuji sendiri.
