@@ -8,7 +8,7 @@ Refactoring tugas Minggu 3 menjadi aplikasi web kontemporer: seluruh konten dimu
 - **Program Studi:** S1 Sistem Informasi
 - **Mata Kuliah:** Pemrograman dan Pengujian Web (12S3101)
 - **Dosen Pengampu:** Chandro Pardede, S.Kom., M.Sc.
-- **Live Demo (GitHub Pages):** https://FredrickAritonang.github.io/smartstore-ai-copilot/
+- **Live Demo (GitHub Pages):** https://fredrickaritonang.github.io/ppw-2026-week4-12S24001/
 
 ## Struktur Direktori
 ```
