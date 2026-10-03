@@ -17,8 +17,8 @@ Refactoring tugas Minggu 3 menjadi aplikasi web kontemporer: seluruh konten dimu
 ├── css/custom-style.css    # Tema, skeleton loading, state komponen
 ├── data/
 │   ├── profile.json        # Biodata, keahlian, alur kerja, sertifikat
-│   ├── projects.json       # 4 proyek: metrics, tags, image, link
-│   └── services.json       # 3 paket layanan (fitur, tarif) + daftar topik mata kuliah
+│   ├── projects.json       # 10 proyek: metrics, tags, image, link
+│   └── services.json       # 12 paket layanan (fitur, tarif) + daftar topik mata kuliah
 ├── js/
 │   ├── api-service.js      # Data Access Layer: fetch, timeout, error handling, POST
 │   └── app.js              # Presentation Layer: render DOM, event, state lokal
