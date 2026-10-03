@@ -29,33 +29,41 @@ Refactoring tugas Minggu 3 menjadi aplikasi web kontemporer: seluruh konten dimu
 ## 1. Pemodelan Arsitektur Web (C4 Container Model)
 
 ```mermaid
-C4Container
-  title Container Diagram: Portofolio & Portal Layanan (Decoupled CSR)
+flowchart TB
+  visitor(["<b>Pengunjung</b><br/>[Person]<br/>Dosen, penguji, atau calon klien"])
 
-  Person(visitor, "Pengunjung", "Dosen, penguji, atau calon klien")
+  subgraph boundary["Sistem: Portofolio Decoupled CSR"]
+    direction TB
+    spa["<b>Web App (Presentation Tier)</b><br/>[Container: HTML5, Bootstrap 5.3, JavaScript ES6+]<br/>Shell HTML, app.js merakit DOM, 4 UI state,<br/>modal universal, form, dan toast"]
+    api["<b>Data Access Layer</b><br/>[Container: api-service.js, Fetch API]<br/>Memanggil JSON dan REST, timeout,<br/>klasifikasi error"]
+    static["<b>Static Web Server</b><br/>[Container: GitHub Pages]<br/>Menyajikan index.html, css, js, assets<br/>dengan header ETag dan Cache-Control"]
+    json[("<b>JSON Data Providers</b><br/>[Container: profile.json, projects.json, services.json]<br/>Mock RESTful data layer")]
+    local[("<b>Browser Storage</b><br/>[Container: localStorage]<br/>Riwayat pesanan di sisi klien")]
+  end
 
-  System_Boundary(app, "Portofolio Decoupled CSR") {
-    Container(spa, "Web App (Presentation Tier)", "HTML5, Bootstrap 5.3, JavaScript ES6+", "Shell HTML, app.js merakit DOM, mengelola 4 UI state, modal universal, form, dan toast")
-    Container(api, "Data Access Layer", "api-service.js, Fetch API", "Memanggil JSON dan REST, timeout, klasifikasi error")
-    Container(static, "Static Web Server", "GitHub Pages", "Menyajikan index.html, css, js, assets dengan header ETag dan Cache-Control")
-    ContainerDb(json, "JSON Data Providers", "profile.json, projects.json, services.json", "Mock RESTful data layer: Data Storage Tier statis")
-    ContainerDb(local, "Browser Storage", "localStorage", "Riwayat pesanan di sisi klien")
-  }
+  cdn["<b>CDN Edge</b><br/>[External System]<br/>jsDelivr (Bootstrap) dan Fastly<br/>di depan GitHub Pages"]
+  rest["<b>Mock REST API</b><br/>[External System]<br/>jsonplaceholder: POST /posts<br/>menjawab 201 Created"]
+  img["<b>Unsplash</b><br/>[External System]<br/>Gambar thumbnail proyek"]
 
-  System_Ext(cdn, "CDN Edge", "jsDelivr (Bootstrap) dan Fastly (di depan GitHub Pages)")
-  System_Ext(rest, "Mock REST API", "jsonplaceholder: POST /posts menjawab 201 Created")
-  System_Ext(img, "Unsplash", "Gambar thumbnail proyek")
+  visitor -->|"Membuka dan berinteraksi (HTTPS)"| spa
+  spa -->|"Memanggil fungsi (JS)"| api
+  spa -->|"Memuat aset (HTTPS GET)"| static
+  spa -->|"Simpan dan baca pesanan (Web Storage API)"| local
+  api -->|"GET data (fetch + JSON)"| json
+  api -->|"POST pesanan (fetch + JSON DTO)"| rest
+  static -->|"Di-cache oleh (HTTP caching)"| cdn
+  spa -->|"Memuat Bootstrap (SRI)"| cdn
+  spa -->|"Memuat gambar (HTTPS GET)"| img
 
-  Rel(visitor, spa, "Membuka dan berinteraksi", "HTTPS")
-  Rel(spa, api, "Memanggil fungsi", "JS module")
-  Rel(spa, static, "Memuat aset", "HTTPS GET")
-  Rel(static, cdn, "Di-cache oleh", "HTTP caching RFC 9111")
-  Rel(api, json, "GET data", "fetch + JSON")
-  Rel(api, rest, "POST pesanan", "fetch + JSON DTO")
-  Rel(spa, local, "Simpan dan baca pesanan", "Web Storage API")
-  Rel(spa, cdn, "Memuat Bootstrap (SRI)", "HTTPS GET")
-  Rel(spa, img, "Memuat gambar", "HTTPS GET")
+  classDef person fill:#08427b,stroke:#052e56,color:#ffffff
+  classDef container fill:#1168bd,stroke:#0b4884,color:#ffffff
+  classDef external fill:#6b7280,stroke:#4b5563,color:#ffffff
+  class visitor person
+  class spa,api,static,json,local container
+  class cdn,rest,img external
 ```
+
+Keterangan: kotak biru = container milik sistem, biru tua = aktor, abu-abu = sistem eksternal, silinder = penyimpanan data.
 
 ### Alur permintaan data (CSR)
 ```mermaid
