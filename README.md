@@ -68,19 +68,31 @@ Keterangan: kotak biru = container milik sistem, biru tua = aktor, abu-abu = sis
 ### Alur permintaan data (CSR)
 ```mermaid
 sequenceDiagram
+  autonumber
   participant B as Browser
   participant S as Static Server
   participant D as JSON Provider
-  B->>S: GET index.html (shell kecil)
-  B->>S: GET css, js
-  B->>B: Tampilkan skeleton (Loading)
-  B->>D: fetch profile, projects, services (paralel)
-  alt berhasil
+
+  B->>S: GET index.html
+  S-->>B: 200 (shell HTML)
+  B->>S: GET css dan js
+  S-->>B: 200 (css, js)
+  Note over B,S: State Loading: skeleton ditampilkan
+
+  par Unduh paralel
+    B->>D: GET profile.json
+  and
+    B->>D: GET projects.json
+  and
+    B->>D: GET services.json
+  end
+
+  alt Berhasil
     D-->>B: 200 JSON
-    B->>B: Render kartu (Success) atau Empty
-  else gagal
-    D-->>B: 4xx/5xx atau timeout
-    B->>B: Tampilkan alert + tombol "Coba lagi" (Error)
+    Note over B,D: State Success atau Empty: kartu dirender
+  else Gagal
+    D-->>B: 4xx, 5xx, atau timeout
+    Note over B,D: State Error: alert dan tombol Coba lagi
   end
 ```
 
